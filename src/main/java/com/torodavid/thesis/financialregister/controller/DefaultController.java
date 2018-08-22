@@ -1,16 +1,13 @@
 package com.torodavid.thesis.financialregister.controller;
 
-import com.torodavid.thesis.financialregister.dal.dao.One;
-import com.torodavid.thesis.financialregister.dal.repository.OneRepository;
+import com.torodavid.thesis.financialregister.dal.dao.CashFlow;
+import com.torodavid.thesis.financialregister.service.CashFlowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -18,7 +15,7 @@ import java.util.stream.Stream;
 public class DefaultController {
 
     @Autowired
-    private OneRepository oneRepository;
+    CashFlowService cashFlowService;
 
     @GetMapping("/")
     public String home1() {
@@ -74,17 +71,17 @@ public class DefaultController {
     public @ResponseBody boolean generateTest() {
         Stream.iterate(1, i -> i++).limit(10).forEach(i ->
         {
-            One one = new One();
-            one.setName("kisnyul" + new Random().nextInt());
-            oneRepository.save(one);
+            CashFlow cashFlow = new CashFlow();
+            cashFlow.setName("kisnyul" + new Random().nextInt());
+            cashFlowService.save(cashFlow);
 
         });
         return true;
     }
 
     @GetMapping(path="/all")
-    public @ResponseBody Iterable<One> getAllOnes() {
-        return oneRepository.findAll();
+    public @ResponseBody Iterable<CashFlow> getAllOnes() {
+        return cashFlowService.getAllCashFlows();
     }
 
 }
