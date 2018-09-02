@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'cashFlow')}">
+
+<body>
+
+<h2>CashFlow create or update</h2>
+<form th:object="${cashFlow}" class="form-horizontal" id="add-cash-flow-form" method="post">
+    <div class="form-group has-feedback">
+        <input
+                th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />
+        <input
+                th:replace="~{fragments/inputField :: input ('Description', 'description', 'text')}" />
+        <input
+                th:replace="~{fragments/selectField :: select ('Category', 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()})}" />
+        <input
+                th:replace="~{fragments/selectField :: select ('Flow Direction', 'flowDirection', ${T(com.torodavid.thesis.financialregister.dal.enums.FlowDirection).values()})}" />
+        <input
+                th:replace="~{fragments/selectField :: select ('Priority', 'priority', ${T(com.torodavid.thesis.financialregister.dal.enums.Priority).values()})}" />
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-default" type="submit">Add or update cash-flow</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

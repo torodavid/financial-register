@@ -1,6 +1,10 @@
 package com.torodavid.thesis.financialregister.controller;
 
 import com.torodavid.thesis.financialregister.dal.dao.CashFlow;
+import com.torodavid.thesis.financialregister.dal.enums.Category;
+import com.torodavid.thesis.financialregister.dal.enums.FlowDirection;
+import com.torodavid.thesis.financialregister.dal.enums.Priority;
+import com.torodavid.thesis.financialregister.service.CashFlowGenerator;
 import com.torodavid.thesis.financialregister.service.CashFlowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -15,11 +20,14 @@ import java.util.stream.Stream;
 public class DefaultController {
 
     @Autowired
-    CashFlowService cashFlowService;
+    private CashFlowService cashFlowService;
+
+    @Autowired
+    private CashFlowGenerator cashFlowGenerator;
 
     @GetMapping("/")
     public String home1() {
-        return "/index";
+        return "/home";
     }
 
     @GetMapping(value = "/mvTeszt")
@@ -47,11 +55,6 @@ public class DefaultController {
         return "admin";
     }
 
-    @GetMapping("/user")
-    public String user() {
-        return "user";
-    }
-
     @GetMapping("/about")
     public String about() {
         return "about";
@@ -68,15 +71,9 @@ public class DefaultController {
     }
 
     @GetMapping(path="/generateTest")
-    public @ResponseBody boolean generateTest() {
-        Stream.iterate(1, i -> i++).limit(10).forEach(i ->
-        {
-            CashFlow cashFlow = new CashFlow();
-            cashFlow.setName("kisnyul" + new Random().nextInt());
-            cashFlowService.save(cashFlow);
-
-        });
-        return true;
+    public String generateTest() {
+        cashFlowGenerator.generateCashFlows(30);
+        return "redirect:/all";
     }
 
     @GetMapping(path="/all")

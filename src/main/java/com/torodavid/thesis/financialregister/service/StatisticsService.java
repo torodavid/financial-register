@@ -5,14 +5,16 @@ import com.torodavid.thesis.financialregister.dal.dto.StatisticsWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StatisticsService {
 
     @Autowired
     CashFlowService cashFlowService;
 
-    public StatisticsWrapper csudalatosStatisztikaiKisnyulakParameterekbol(Long... ids) {
-        Iterable<CashFlow> allCashFlowsByIds = cashFlowService.getAllCashFlowsByIds(ids);
+    public StatisticsWrapper csudalatosStatisztikaiKisnyulakParameterekbol(List<Long> ids) {
+        Iterable<CashFlow> allCashFlowsByIds = cashFlowService.findAllCashFlowsByIds(ids);
 
 
         return new StatisticsWrapper();

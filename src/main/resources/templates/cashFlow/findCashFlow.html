@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'cashFlow')}">
+
+<body>
+
+<h2>Find cash-flow</h2>
+
+<form th:object="${cashFlow}" th:action="@{/cashFlow}" method="get"
+      class="form-horizontal" id="search-owner-form">
+    <div class="form-group">
+        <div class="control-group" id="nameGroup">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" th:field="*{name}" size="30"
+                       maxlength="80" />
+
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Find cash-flow</button>
+        </div>
+    </div>
+
+</form>
+
+<br />
+<a class="btn btn-default" th:href="@{/cashFlow/new}">Add cash-flow</a>
+
+</body>
+</html>

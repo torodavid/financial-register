@@ -1,0 +1,12 @@
+<form action="#" th:action="@{/cashFlow/create}" th:object="${cashFlow}" method="post">
+    <div>Name <input type="text" th:field="*{name}" /></div>
+    <div>Description <input type="text" th:field="*{description}" /></div>
+    <div>Category <select th:field="*{category}">
+        <option th:each="category : ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()}"
+                th:value="${category}"
+                th:text="${category.name}">
+        </option>
+    </select>
+    </div>
+    <input type="submit" />
+</form>
