@@ -15,15 +15,19 @@
         <th>CATEGORY</th>
         <th>PRIORITY</th>
         <th>FLOW DIRECTION</th>
+        <th>Modisitas</th>
+        <th>Torles</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="cashFlow : ${cashFlows}">
+    <tr th:each="cashFlow : ${cashFlows}" th:title="${title}">
         <td th:text="${cashFlow.name}">Kisnyul</td>
         <td th:text="${cashFlow.description}">Bazinagy kisnyul</td>
         <td th:text="${cashFlow.category.name}">Szorakozas</td>
         <td th:text="${cashFlow.priority.name}">FONTOS NYUL</td>
         <td th:text="${cashFlow.flowDirection.name}">Kiadas</td>
+        <td> <a th:href="@{modify/__${cashFlow.id}__}">Modify</a></td>
+        <td> <a th:href="@{delete/__${cashFlow.id}__}">Delete</a></td>
     </tr>
     </tbody>
 </table>

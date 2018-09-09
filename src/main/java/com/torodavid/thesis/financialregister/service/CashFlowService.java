@@ -53,4 +53,8 @@ public class CashFlowService {
         return cashFlowRepository.findAllById(ids);
     }
 
+    public void deleteCashFlowById(Long id) {
+        cashFlowRepository.deleteById(id);
+    }
+
 }

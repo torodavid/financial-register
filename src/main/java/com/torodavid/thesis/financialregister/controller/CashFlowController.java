@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,10 +50,28 @@ public class CashFlowController {
     }
 
     @PostMapping("/new")
-    public String processCreationForm(CashFlow cashFlow, BindingResult result) {
-
+    public String processCreationForm(CashFlow cashFlow) {
         Long id = cashFlowService.save(cashFlow).getId();
         return "redirect:/cashFlow/" + id;
+    }
+
+    @GetMapping("/modify/{cashFlowId}")
+    public String modifyCashFlow(Map<String, Object> model, @PathVariable("cashFlowId") Long id) {
+        CashFlow kisnyul = cashFlowService.getCashFlowById(id).get();
+        model.put("cashFlow", kisnyul);
+        return CASH_FLOW_CREATE_OR_UPDATE;
+    }
+
+    @PostMapping("/modify/{cashFlowId}")
+    public String processModifyCashFlowForm(CashFlow cashFlow) {
+        cashFlowService.save(cashFlow).getId();
+        return "redirect:/cashFlow/list";
+    }
+
+    @GetMapping("/delete/{cashFlowId}")
+    public String deleteCashFlow(@PathVariable("cashFlowId") Long id) {
+        cashFlowService.deleteCashFlowById(id);
+        return "redirect:/cashFlow/list";
     }
 
     @GetMapping("/{cashFlowIds}")
