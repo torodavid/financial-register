@@ -4,12 +4,15 @@ import com.torodavid.thesis.financialregister.dal.dao.CashFlow;
 import com.torodavid.thesis.financialregister.service.CashFlowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -66,5 +69,12 @@ public class CashFlowController {
         return "cashFlow/findCashFlow";
     }
 
+    @GetMapping("/list")
+    public ModelAndView showAllCashFlows() {
+        Iterable<CashFlow> allCashFlowsById = cashFlowService.getAllCashFlows();
+        ModelAndView mav = new ModelAndView("cashFlow/details");
+        mav.addObject("cashFlows", StreamSupport.stream(allCashFlowsById.spliterator(), false).collect(Collectors.toList()));
+        return mav;
+    }
 
 }

@@ -1,77 +1,114 @@
-<!-- <div th:fragment="menu">
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Keresgelj csak</a>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="kisnyul" aria-label="kisnyul">
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a th:href="@{/fragments}">Penzmozgas rogzites</a>
-            </li>
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Penzmozgas modositas</a>
-            </li>
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Penzmozgas megtekintes</a>
-            </li>
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Sign out</a>
-            </li>
-        </ul>
-    </nav>
-</div></ -->
-
 <!doctype html>
-<html th:fragment="layout (template, menu)">
+<html th:fragment="layout (template, menu)" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="utf-8">
 
-
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
     <title>Pls</title>
 
 </head>
 
 <body>
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Dropdown link
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>-->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;"    >
+    <img th:src="@{/resources/images/nc.png}" width="30" height="40" class="d-inline-block align-top" alt="">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="nav navbar-nav navbar-right">
+            <!-- TODO: kirakni ezt a fragmentet kulon fileba -->
+            <li th:fragment="menuItem (path,active,title,glyph,text)" class="active"
+                th:class="${active==menu ? 'active' : ''}">
+                <a th:href="@{__${path}__}" th:title="${title}" class="nav-item nav-link">
+                        <span th:class="'glyphicon  glyphicon-'+${glyph}" class="glyphicon glyphicon-home"
+                              aria-hidden="true"></span>
+                    <span th:text="${text}">Template</span>
+                </a>
+            </li>
 
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" th:href="@{/}"><span></span></a>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
-                <span class="sr-only"><os-p>Toggle navigation</os-p></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse collapse" id="main-navbar">
-            <ul class="nav navbar-nav navbar-right">
 
-                <li th:fragment="menuItem (path,active,title,glyph,text)" class="active" th:class="${active==menu ? 'active' : ''}">
-                    <a th:href="@{__${path}__}" th:title="${title}">
-                        <span th:class="'glyphicon  glyphicon-'+${glyph}" class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                        <span th:text="${text}">Template</span>
-                    </a>
-                </li>
+            <!-- TODO: irni egy dropDownMenu fragmentet, valami mapet atadni aminek kulcsai path-ek, ertekei a legordulo menu szovegei, valahogy igy
+                        cashFlow: ${ {find:'Kereses', create:'Letrehozas', list:'Osszes'} }
+                        aztan
+            <li th:fragment="menuDropDownItem (path,active,title,glyph,text)" class="nav-item dropdown active"
+                th:class="${active==menu ? 'active' : ''}">
+                <a th:href="@{__${path}__}" th:title="${title}" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span th:class="'glyphicon  glyphicon-'+${glyph}" class="glyphicon glyphicon-home"
+                              aria-hidden="true"></span>
+                    <span th:text="${text}">Template</span>
+                </a>
+            </li>
+            -->
 
-                <li th:replace="::menuItem ('/','home','home page','home','Home')">
-                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                    <span>Home</span>
-                </li>
+            <li th:replace="::menuItem ('/','home','home page','home','Home')">
+            </li>
 
-                <li th:replace="::menuItem ('/cashFlow/find','cashFlow','find cash-flow','search','Find cash-flow')">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <span>Find cashFlow</span>
-                </li>
-                <!-- ez majd az admin menosege lesz -->
-                <li th:replace="::menuItem ('/users/find','user','find user','search','Find user')">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <span>Find user</span>
-                </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Pénzmozgás
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/cashFlow/new">Uj</a>
+                    <a class="dropdown-item" href="/cashFlow/find">Kereses</a>
+                    <a class="dropdown-item" href="/cashFlow/list">Osszes</a>
+                </div>
+            </li>
 
-            </ul>
-        </div>
+            <!--<li th:replace="::menuItem ('/cashFlow/find','cashFlow','find cash-flow','search','Find cash-flow')"> </li>-->
+
+            <!-- ez majd az admin menosege lesz -->
+            <li th:replace="::menuItem ('/users/find','user','find user','search','Find user')">
+
+            </li>
+
+        </ul>
     </div>
 </nav>
 <div class="container-fluid">
@@ -85,10 +122,13 @@
             <div class="row">
                 <div class="col-12 text-center">
 
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script th:src="@{/jquery/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
 
 
 </body>
