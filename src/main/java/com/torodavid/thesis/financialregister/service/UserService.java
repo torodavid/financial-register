@@ -1,8 +1,9 @@
 package com.torodavid.thesis.financialregister.service;
 
-import org.springframework.stereotype.Service;
+import com.torodavid.thesis.financialregister.dal.dao.User;
 
-@Service
-public class UserService {
+public interface UserService {
+    void save(User user);
 
+    User findByUsername(String username);
 }
