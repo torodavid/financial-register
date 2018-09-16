@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-<h1 th:text="#{label.reg.form.title}">form</h1>
+<h1 th:text="#{users.registration.form.title}">form</h1>
 <form th:object="${user}" method="POST">
     <div>
         <label th:text="#{label.user.username}">first</label>
@@ -28,6 +28,6 @@
     <button type="submit" th:text="#{label.form.submit}">submit</button>
 </form>
 
-<a th:href="@{/login.html}" th:text="#{label.form.loginLink}">login</a>
+<a th:href="@{/users/login}" th:text="#{users.login.button}">login</a>
 </body>
 </html>

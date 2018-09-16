@@ -4,6 +4,11 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class UserDto {
+
+    @NotNull
+    @NotEmpty
+    private String id;
+
     @NotNull
     @NotEmpty
     private String username;
@@ -16,6 +21,23 @@ public class UserDto {
     @NotNull
     @NotEmpty
     private String email;
+
+    public UserDto() {
+    }
+
+    public UserDto(@NotNull @NotEmpty String id, @NotNull @NotEmpty String username, @NotNull @NotEmpty String email) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
