@@ -51,7 +51,7 @@ public class UserController {
     @PostMapping("/login")
     public String loginUserAccount(UserDto accountDto) {
 
-        return "home";
+         return "home";
     }
 
     @GetMapping("/list")
@@ -60,6 +60,11 @@ public class UserController {
         ModelAndView mav = new ModelAndView("user/userDetails");
         mav.addObject("users", StreamSupport.stream(allCashFlowsById.spliterator(), false).collect(Collectors.toList()));
         return mav;
+    }
+
+    @GetMapping("/access-denied")
+    public String accessDenied() {
+        return "/error/access-denied";
     }
 
 }

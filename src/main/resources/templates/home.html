@@ -1,13 +1,25 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+<html th:replace="~{fragments/layout :: layout (~{::body},'home')}">
 
 <body>
 
 <h2>Welcome Kisnyul!</h2>
-<div class="row">
+<div class="row" sec:authorize="isAuthenticated()">
     <div class="col-md-12">
         Csumika
+    </div>
+</div>
+
+<!--<div class="row" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+    <div class="col-md-12">
+        Teszt
+    </div>
+</div>-->
+
+<div class="row" sec:authorize="hasRole('dAdDssMIN')">
+    <div class="col-md-12">
+        Teszt2
     </div>
 </div>
 

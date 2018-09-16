@@ -1,5 +1,6 @@
 package com.torodavid.thesis.financialregister.configuration;
 
+import com.torodavid.thesis.financialregister.service.LoggingAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -25,18 +27,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    private LoggingAccessDeniedHandler accessDeniedHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/user/**").permitAll()
+                .antMatchers("/resources/**", "/users/registration", "/", "/home").permitAll()
+                .antMatchers("/cashFlow/**").hasRole("USER")
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                    .formLogin()
+                    .loginPage("/users/login")
+                    .permitAll()
                 .and()
-                .logout()
-                .permitAll()
+                    .logout()
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/users/logout"))
+                    .logoutSuccessUrl("/users/login?logout")
+                    .permitAll()
+                .and()
+                    .exceptionHandling()
+                    .accessDeniedHandler(accessDeniedHandler)
                 .and()
                 .csrf()
                 .disable();

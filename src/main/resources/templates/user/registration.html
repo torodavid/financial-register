@@ -1,5 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'registration')}">
 <body>
 <h1 th:text="#{users.registration.form.title}">form</h1>
 <form th:object="${user}" method="POST">
