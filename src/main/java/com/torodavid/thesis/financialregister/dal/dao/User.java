@@ -18,6 +18,8 @@ public class User {
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+    @OneToMany(mappedBy = "user")
+    private Set<CashFlow> cashFlows;
 
     public String getId() {
         return id;
@@ -65,6 +67,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<CashFlow> getCashFlows() {
+        return cashFlows;
+    }
+
+    public void setCashFlows(Set<CashFlow> cashFlows) {
+        this.cashFlows = cashFlows;
     }
 
 }

@@ -4,10 +4,7 @@ import com.torodavid.thesis.financialregister.dal.enums.Category;
 import com.torodavid.thesis.financialregister.dal.enums.FlowDirection;
 import com.torodavid.thesis.financialregister.dal.enums.Priority;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -24,6 +21,9 @@ public class CashFlow {
     private Priority priority;
     private Category category;
     private FlowDirection flowDirection;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Long getId() {
         return id;
@@ -96,4 +96,13 @@ public class CashFlow {
     public void setFlowDirection(FlowDirection flowDirection) {
         this.flowDirection = flowDirection;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

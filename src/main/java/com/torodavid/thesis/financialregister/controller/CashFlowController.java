@@ -89,7 +89,7 @@ public class CashFlowController {
 
     @GetMapping("/list")
     public ModelAndView showAllCashFlows() {
-        Iterable<CashFlow> allCashFlowsById = cashFlowService.getAllCashFlows();
+        Iterable<CashFlow> allCashFlowsById = cashFlowService.findAllCashFlowsByUsername();
         ModelAndView mav = new ModelAndView("cashFlow/details");
         mav.addObject("cashFlows", StreamSupport.stream(allCashFlowsById.spliterator(), false).collect(Collectors.toList()));
         return mav;
