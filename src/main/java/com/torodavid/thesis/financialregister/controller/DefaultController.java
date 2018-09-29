@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class DefaultController {
@@ -21,21 +20,6 @@ public class DefaultController {
     @GetMapping("/")
     public String home1() {
         return "/home";
-    }
-
-    @GetMapping(value = "/mvTeszt")
-    public ModelAndView proba() {
-
-        ModelAndView mv = new ModelAndView();
-
-        //Map<String, String> content = new HashMap<>();
-        //content.put("dummy", "dsdddddddddddd");
-        mv.addObject("dummy", "KISNYUL");
-
-        mv.setViewName("proba");
-
-
-        return mv;
     }
 
     @GetMapping("/home")

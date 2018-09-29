@@ -68,15 +68,18 @@ public class CashFlowService {
 
     }
 
-    public Page<CashFlow> findPaginated(Pageable pageable) {
+    public Page<CashFlow> findPaginated(Pageable pageable, Optional<List<Long>> ids) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         List<CashFlow> list;
 
         List<CashFlow> cashFlows = new ArrayList<>();
-        findAllCashFlowsByUsername().forEach(cashFlows::add);
-
+        if (ids.isPresent()) {
+            findAllCashFlowsByUsername().forEach(cashFlow -> { if(ids.get().contains(cashFlow.getId())) cashFlows.add(cashFlow); } );
+        } else {
+            findAllCashFlowsByUsername().forEach(cashFlows::add);
+        }
         if (cashFlows.size() < startItem) {
             list = Collections.emptyList();
         } else {
@@ -93,10 +96,6 @@ public class CashFlowService {
     public Optional<CashFlow> getCashFlowById(Long id) {
         return cashFlowRepository.findById(id);
     }
-
-    /*public Optional<CashFlow> getCashFlowByUserId(Long id) {
-        return cashFlowRepository.getCashFlowByUserId(id);
-    }*/
 
     public Iterable<CashFlow> getAllCashFlows() {
         return cashFlowRepository.findAll();

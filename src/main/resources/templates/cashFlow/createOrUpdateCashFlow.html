@@ -4,6 +4,7 @@
 <body>
 
 <h2>CashFlow create or update</h2>
+<h2 th:if="${redirected}">No result, but lets create!</h2>
 <form th:object="${cashFlow}" class="form-horizontal" id="add-cash-flow-form" method="post">
     <div class="form-group has-feedback">
         <input type="hidden" th:value="${cashFlow.id}" name="id" />

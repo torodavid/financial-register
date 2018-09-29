@@ -17,7 +17,6 @@ public class SecurityServiceImpl implements SecurityService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    //@Qualifier("UserDetailsServiceImpl")
     private UserDetailsService userDetailsService;
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);

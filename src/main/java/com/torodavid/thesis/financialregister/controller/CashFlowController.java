@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
@@ -37,10 +36,12 @@ public class CashFlowController {
 
         if (!cashFlowsByName.iterator().hasNext()) {
             //result.rejectValue("kisnyul", "notFound", "not found");
+            model.put("redirected", true);
             return CASH_FLOW_CREATE_OR_UPDATE;
         } else {
             List<Long> cashFlowIds = StreamSupport.stream(cashFlowsByName.spliterator(), true).map(cf -> cf.getId()).collect(Collectors.toList());
-            return "redirect:/cashFlow/" + cashFlowIds.toString().replace("[", "")
+            return "redirect:/cashFlow/" + cashFlowIds.toString()
+                    .replace("[", "")
                     .replace("]", "")
                     .trim();
         }
@@ -79,12 +80,22 @@ public class CashFlowController {
     }
 
     @GetMapping("/{cashFlowIds}")
-    public ModelAndView showCashFlows(@PathVariable("cashFlowIds") List<Long> cashFlowIds) {
-        Iterable<CashFlow> allCashFlowsById = cashFlowService.findAllCashFlowsByIds(cashFlowIds);
-        ModelAndView mav = new ModelAndView("cashFlow/details");
-        //TODO paginationosre atirni
-        mav.addObject("cashFlows", StreamSupport.stream(allCashFlowsById.spliterator(), false).collect(Collectors.toList()));
-        return mav;
+    public String showCashFlows(@PathVariable("cashFlowIds") List<Long> cashFlowIds, Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+        currentPage = 1;
+        size.ifPresent(s -> pageSize = s);
+
+        Page<CashFlow> cashFlowPage = cashFlowService.findPaginated(PageRequest.of(currentPage - 1, pageSize), Optional.ofNullable(cashFlowIds));
+        model.addAttribute("cashFlowPage", cashFlowPage);
+
+        int totalPages = cashFlowPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        return "cashFlow/details";
     }
 
     @GetMapping("/find")
@@ -93,20 +104,12 @@ public class CashFlowController {
         return "cashFlow/findCashFlow";
     }
 
-    /*@GetMapping("/list")
-    public ModelAndView showAllCashFlows() {
-        Iterable<CashFlow> allCashFlowsById = cashFlowService.findAllCashFlowsByUsername();
-        ModelAndView mav = new ModelAndView("details3");
-        mav.addObject("cashFlows", StreamSupport.stream(allCashFlowsById.spliterator(), false).collect(Collectors.toList()));
-        return mav;
-    }*/
-
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listBooks(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
         page.ifPresent(p -> currentPage = p);
         size.ifPresent(s -> pageSize = s);
 
-        Page<CashFlow> cashFlowPage = cashFlowService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        Page<CashFlow> cashFlowPage = cashFlowService.findPaginated(PageRequest.of(currentPage - 1, pageSize), Optional.empty());
 
         model.addAttribute("cashFlowPage", cashFlowPage);
 
@@ -122,8 +125,9 @@ public class CashFlowController {
     }
 
     @GetMapping("/generate")
-    public @ResponseBody Boolean generate() {
-            cashFlowService.generateCashFlowsToCurrentUser();
+    public @ResponseBody
+    Boolean generate() {
+        cashFlowService.generateCashFlowsToCurrentUser();
         return true;
     }
 

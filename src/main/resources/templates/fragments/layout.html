@@ -29,22 +29,11 @@
                     <span th:text="${text}">Template</span>
                 </a>
             </li>
-            <!-- TODO: irni egy dropDownMenu fragmentet, valami mapet atadni aminek kulcsai path-ek, ertekei a legordulo menu szovegei, valahogy igy
-                        cashFlow: ${ {find:'Kereses', create:'Letrehozas', list:'Osszes'} }
-                        aztan
-            <li th:fragment="menuDropDownItem (path,active,title,glyph,text)" class="nav-item dropdown active"
-                th:class="${active==menu ? 'active' : ''}">
-                <a th:href="@{__${path}__}" th:title="${title}" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span th:class="'glyphicon  glyphicon-'+${glyph}" class="glyphicon glyphicon-home"
-                              aria-hidden="true"></span>
-                    <span th:text="${text}">Template</span>
-                </a>
-            </li>-->
 
             <li th:replace="::menuItem ('/','home','Home page','home','Home')">
             </li>
 
-            <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+            <li sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="cashFlowDropDown" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     Pénzmozgás
@@ -56,11 +45,10 @@
                 </div>
             </li>
 
-            <!-- ez majd az admin menosege lesz -->
-            <li th:replace="::menuItem ('/users/list','user','Felhasználók oldala','search','Felhasználók')"></li>
-            <li th:replace="::menuItem ('/users/registration','registration','Regisztrációs oldal','registration','Regisztráció')"></li>
-            <li th:replace="::menuItem ('/users/login','login','Bejelentkező oldal','login','Bejelentkezés')"></li>
-            <li th:replace="::menuItem ('/users/logout','logout','Kijelentkezls oldala','logout','Kijelentkezés')"></li>
+            <li th:replace="::menuItem ('/users/list','user','Felhasználók oldala','search','Felhasználók')" sec:authorize="hasRole('ROLE_ADMIN')"></li>
+            <li th:replace="::menuItem ('/users/registration','registration','Regisztrációs oldal','registration','Regisztráció')" sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
+            <li th:replace="::menuItem ('/users/login','login','Bejelentkező oldal','login','Bejelentkezés')" sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
+            <li th:replace="::menuItem ('/users/logout','logout','Kijelentkezls oldala','logout','Kijelentkezés')" sec:authorize="isAuthenticated()"></li>
 
         </ul>
     </div>
