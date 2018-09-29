@@ -7,11 +7,13 @@
 
 <h2>Cash-flows</h2>
 
-<table class="table table-striped" th:object="${cashFlows}">
+
+<table class="table table-striped" th:object="${cashFlowPage}">
     <thead class="table-primary">
     <tr>
         <th>NAME</th>
         <th>DESCRIPTION</th>
+        <th>AMOUNT</th>
         <th>CATEGORY</th>
         <th>PRIORITY</th>
         <th>FLOW DIRECTION</th>
@@ -20,38 +22,32 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="cashFlow : ${cashFlows}" th:title="${title}">
+    <tr th:each="cashFlow, iStat : ${cashFlowPage.content}" th:title="${title}">
         <td th:text="${cashFlow.name}">Kisnyul</td>
         <td th:text="${cashFlow.description}">Bazinagy kisnyul</td>
+        <td th:text="${cashFlow.amount}">sok Bazinagy kisnyul</td>
         <td th:text="${cashFlow.category.name}">Szorakozas</td>
         <td th:text="${cashFlow.priority.name}">FONTOS NYUL</td>
         <td th:text="${cashFlow.flowDirection.name}">Kiadas</td>
-        <td> <a th:href="@{modify/__${cashFlow.id}__}">Modify</a></td>
-        <td> <a th:href="@{delete/__${cashFlow.id}__}">Delete</a></td>
+        <td><a th:href="@{modify/__${cashFlow.id}__}">Modify</a></td>
+        <td><a th:href="@{delete/__${cashFlow.id}__}">Delete</a></td>
     </tr>
     </tbody>
 </table>
 
-<nav aria-label="...">
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active">
-            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
-<!--
-<a th:href="@{{id}/edit(id=${cashFlow.id})}" class="btn btn-default">Edit cash-flow</a>
--->
-<br/>
-
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <div class="d-flex flex-wrap" th:if="${cashFlowPage.totalPages > 0}">
+                <div th:each="pageNumber : ${pageNumbers}" class="page-item"
+                     th:classappend="${pageNumber==cashFlowPage.number + 1} ? active">
+                    <a class="page-link"
+                       th:href="@{/cashFlow/list(size=${cashFlowPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
-
 </html>

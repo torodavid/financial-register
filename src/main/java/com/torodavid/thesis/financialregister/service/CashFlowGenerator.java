@@ -7,6 +7,7 @@ import com.torodavid.thesis.financialregister.dal.enums.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -26,8 +27,8 @@ public class CashFlowGenerator {
             cashFlow.setCategory(Category.ENTERTAINMENT);
             cashFlow.setFlowDirection(FlowDirection.IN);
             cashFlow.setPriority(Priority.TWO);
-            cashFlow.setCreationDate(new Date());
-            cashFlow.setModificationDate(new Date());
+            cashFlow.setCreationDate(LocalDateTime.now());
+            cashFlow.setModificationDate(LocalDateTime.now());
             cashFlowService.save(cashFlow);
         });
     }

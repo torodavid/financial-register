@@ -3,22 +3,27 @@ package com.torodavid.thesis.financialregister.controller;
 import com.torodavid.thesis.financialregister.dal.dao.CashFlow;
 import com.torodavid.thesis.financialregister.service.CashFlowService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 @Controller
 @RequestMapping(value = "/cashFlow")
 public class CashFlowController {
+
+    private static int currentPage = 1;
+    private static int pageSize = 10;
 
     private static final String CASH_FLOW_CREATE_OR_UPDATE = "cashFlow/createOrUpdateCashFlow";
 
@@ -43,15 +48,15 @@ public class CashFlowController {
 
     @GetMapping("/new")
     public String initCreationForm(Map<String, Object> model) {
-        CashFlow kisnyul = new CashFlow();
-        model.put("cashFlow", kisnyul);
+        CashFlow cashFlow = new CashFlow();
+        model.put("cashFlow", cashFlow);
         return CASH_FLOW_CREATE_OR_UPDATE;
     }
 
     @PostMapping("/new")
     public String processCreationForm(CashFlow cashFlow) {
         Long id = cashFlowService.save(cashFlow).getId();
-        return "redirect:/cashFlow/" + id;
+        return "redirect:/cashFlow/list";
     }
 
     @GetMapping("/modify/{cashFlowId}")
@@ -63,7 +68,7 @@ public class CashFlowController {
 
     @PostMapping("/modify/{cashFlowId}")
     public String processModifyCashFlowForm(CashFlow cashFlow) {
-        cashFlowService.save(cashFlow).getId();
+        cashFlowService.update(cashFlow);
         return "redirect:/cashFlow/list";
     }
 
@@ -77,6 +82,7 @@ public class CashFlowController {
     public ModelAndView showCashFlows(@PathVariable("cashFlowIds") List<Long> cashFlowIds) {
         Iterable<CashFlow> allCashFlowsById = cashFlowService.findAllCashFlowsByIds(cashFlowIds);
         ModelAndView mav = new ModelAndView("cashFlow/details");
+        //TODO paginationosre atirni
         mav.addObject("cashFlows", StreamSupport.stream(allCashFlowsById.spliterator(), false).collect(Collectors.toList()));
         return mav;
     }
@@ -87,12 +93,38 @@ public class CashFlowController {
         return "cashFlow/findCashFlow";
     }
 
-    @GetMapping("/list")
+    /*@GetMapping("/list")
     public ModelAndView showAllCashFlows() {
         Iterable<CashFlow> allCashFlowsById = cashFlowService.findAllCashFlowsByUsername();
-        ModelAndView mav = new ModelAndView("cashFlow/details");
+        ModelAndView mav = new ModelAndView("details3");
         mav.addObject("cashFlows", StreamSupport.stream(allCashFlowsById.spliterator(), false).collect(Collectors.toList()));
         return mav;
+    }*/
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String listBooks(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+        page.ifPresent(p -> currentPage = p);
+        size.ifPresent(s -> pageSize = s);
+
+        Page<CashFlow> cashFlowPage = cashFlowService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+
+        model.addAttribute("cashFlowPage", cashFlowPage);
+
+        int totalPages = cashFlowPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        return "cashFlow/details";
+    }
+
+    @GetMapping("/generate")
+    public @ResponseBody Boolean generate() {
+            cashFlowService.generateCashFlowsToCurrentUser();
+        return true;
     }
 
 }

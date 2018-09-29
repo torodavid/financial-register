@@ -6,10 +6,13 @@
 <h2>CashFlow create or update</h2>
 <form th:object="${cashFlow}" class="form-horizontal" id="add-cash-flow-form" method="post">
     <div class="form-group has-feedback">
+        <input type="hidden" th:value="${cashFlow.id}" name="id" />
         <input
                 th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />
         <input
                 th:replace="~{fragments/inputField :: input ('Description', 'description', 'text')}" />
+        <input
+                th:replace="~{fragments/inputField :: input ('Amount', 'amount', 'text')}" />
         <input
                 th:replace="~{fragments/selectField :: select ('Category', 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()})}" />
         <input
