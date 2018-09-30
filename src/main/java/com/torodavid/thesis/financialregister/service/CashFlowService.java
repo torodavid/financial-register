@@ -1,6 +1,7 @@
 package com.torodavid.thesis.financialregister.service;
 
 import com.torodavid.thesis.financialregister.dal.dao.CashFlow;
+import com.torodavid.thesis.financialregister.dal.dao.Role;
 import com.torodavid.thesis.financialregister.dal.dao.User;
 import com.torodavid.thesis.financialregister.dal.enums.Category;
 import com.torodavid.thesis.financialregister.dal.enums.FlowDirection;
@@ -93,6 +94,11 @@ public class CashFlowService {
         return cashFlowPage;
     }
 
+    public User getCurrentUser() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.findByUsername(userDetails.getUsername());
+    }
+
     public Optional<CashFlow> getCashFlowById(Long id) {
         return cashFlowRepository.findById(id);
     }
@@ -102,7 +108,25 @@ public class CashFlowService {
     }
 
     public Iterable<CashFlow> findAllCashFlowsByName(String name) {
-        return cashFlowRepository.findAllCashFlowsByName(name);
+        User currentUser = getCurrentUser();
+        Boolean hasRole = false;
+        Iterator<Role> roleIterator = currentUser.getRoles().iterator();
+        while (!hasRole && roleIterator.hasNext())
+            hasRole = roleIterator.next().getName().equals("ROLE_ADMIN");
+        if (hasRole)
+            return cashFlowRepository.findAllCashFlowsByName(name);
+        return cashFlowRepository.findAllCashFlowsByName(name, getCurrentUser());
+    }
+
+    public Optional<CashFlow> findCashFlowByName(String name) {
+        User currentUser = getCurrentUser();
+        Boolean hasRole = false;
+        Iterator<Role> roleIterator = currentUser.getRoles().iterator();
+        while (!hasRole && roleIterator.hasNext())
+            hasRole = roleIterator.next().getName().equals("ROLE_ADMIN");
+        if (hasRole)
+            return cashFlowRepository.findByName(name);
+        return cashFlowRepository.findByName(name, getCurrentUser());
     }
 
     public Iterable<CashFlow> getAllCashFlowsByCategory(Category category) {

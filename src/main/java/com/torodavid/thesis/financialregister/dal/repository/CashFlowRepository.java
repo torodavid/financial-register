@@ -10,14 +10,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface CashFlowRepository extends CrudRepository<CashFlow, Long> {
 
-    Iterable<CashFlow> findAllCashFlowsByName(String name);
+    @Query("select cashFlow from CashFlow cashFlow where cashFlow.name like %?1% and user_id = ?2")
+    Iterable<CashFlow> findAllCashFlowsByName(String username, User user);
+    @Query("select cashFlow from CashFlow cashFlow where cashFlow.name like %?1%")
+    Iterable<CashFlow> findAllCashFlowsByName(String username);
     Iterable<CashFlow> getAllCashFlowsByCategory(Category category);
     Iterable<CashFlow> getAllCashFlowsByFlowDirection(FlowDirection flowDirection);
     Iterable<CashFlow> getAllCashFlowsByPriority(Priority priority);
     Iterable<CashFlow> findAllByUser(User user);
+    Optional<CashFlow> findByName(String name);
+    @Query("select cashFlow from CashFlow cashFlow where cashFlow.name = ?1 and user_id = ?2")
+    Optional<CashFlow> findByName(String name, User user);
 
     @Modifying
     @Query("UPDATE CashFlow CF set CF.name = ?1, CF.description = ?2, CF.amount = ?3, CF.category = ?4, CF.flowDirection = ?5, CF.priority = ?6 where CF.id = ?7")

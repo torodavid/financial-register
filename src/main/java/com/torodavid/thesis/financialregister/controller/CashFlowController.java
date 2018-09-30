@@ -29,7 +29,7 @@ public class CashFlowController {
     @Autowired
     private CashFlowService cashFlowService;
 
-    @GetMapping("")
+    /*@GetMapping("")
     public String processFindForm(CashFlow cashFlow, BindingResult result, Map<String, Object> model) {
 
         Iterable<CashFlow> cashFlowsByName = cashFlowService.findAllCashFlowsByName(cashFlow.getName());
@@ -44,6 +44,17 @@ public class CashFlowController {
                     .replace("[", "")
                     .replace("]", "")
                     .trim();
+        }
+    }*/
+
+    @GetMapping("")
+    public String findCashFlow(CashFlow cashFlow, BindingResult result, Map<String, Object> model) {
+        Optional<CashFlow> cashFlowByName = cashFlowService.findCashFlowByName(cashFlow.getName());
+        if (cashFlowByName.isPresent()) {
+            return "redirect:/cashFlow/" + cashFlowByName.get().getId();
+        } else {
+            model.put("redirected", true);
+            return CASH_FLOW_CREATE_OR_UPDATE;
         }
     }
 

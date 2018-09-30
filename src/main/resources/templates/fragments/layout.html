@@ -50,7 +50,15 @@
             <li th:replace="::menuItem ('/users/login','login','Bejelentkező oldal','login','Bejelentkezés')" sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
             <li th:replace="::menuItem ('/users/logout','logout','Kijelentkezls oldala','logout','Kijelentkezés')" sec:authorize="isAuthenticated()"></li>
             <li th:replace="::menuItem ('/users/profile/' + ${#authentication.getPrincipal().getUsername()},'profile','Profile','profile','Profile')" sec:authorize="isAuthenticated()"></li>
-
+        </ul>
+    </div>
+    <div class="collapse navbar-collapse" sec:authorize="isAuthenticated()">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="'/users/profile/' + ${#authentication.getPrincipal().getUsername()}">
+                    <span th:text="${#authentication.getPrincipal().getUsername()}">Template</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
