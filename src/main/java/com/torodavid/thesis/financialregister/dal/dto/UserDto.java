@@ -1,5 +1,7 @@
 package com.torodavid.thesis.financialregister.dal.dto;
 
+import com.torodavid.thesis.financialregister.dal.dao.User;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -25,10 +27,14 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(@NotNull @NotEmpty String id, @NotNull @NotEmpty String username, @NotNull @NotEmpty String email) {
+    public UserDto(@NotNull @NotEmpty String id, @NotNull @NotEmpty String username, @NotNull @NotEmpty String email, String password, String matchingPassword) {
         this.id = id;
         this.username = username;
         this.email = email;
+    }
+
+    public UserDto(User user) {
+        this(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getPasswordConfirm());
     }
 
     public String getId() {

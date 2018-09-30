@@ -45,10 +45,11 @@
                 </div>
             </li>
 
-            <li th:replace="::menuItem ('/users/list','user','Felhasználók oldala','search','Felhasználók')" sec:authorize="hasRole('ROLE_ADMIN')"></li>
+            <li th:replace="::menuItem ('/users/list','userDetails','Felhasználók oldala','search','Felhasználók')" sec:authorize="hasRole('ROLE_ADMIN')"></li>
             <li th:replace="::menuItem ('/users/registration','registration','Regisztrációs oldal','registration','Regisztráció')" sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
             <li th:replace="::menuItem ('/users/login','login','Bejelentkező oldal','login','Bejelentkezés')" sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
             <li th:replace="::menuItem ('/users/logout','logout','Kijelentkezls oldala','logout','Kijelentkezés')" sec:authorize="isAuthenticated()"></li>
+            <li th:replace="::menuItem ('/users/profile/' + ${#authentication.getPrincipal().getUsername()},'profile','Profile','profile','Profile')" sec:authorize="isAuthenticated()"></li>
 
         </ul>
     </div>

@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'profile')}">
+
+<body>
+
+<h2>Profile page</h2>
+<form th:object="${userDto}" class="form-horizontal" id="add-cash-flow-form" method="post">
+    <div class="form-group has-feedback">
+        <input type="hidden" th:value="${userDto.id}" name="id" />
+        <input
+                th:replace="~{fragments/inputField :: input ('User name', 'username', 'text', true)}" />
+        <input
+                th:replace="~{fragments/inputField :: input ('Email address', 'email', 'email', null)}" />
+        <input
+                th:replace="~{fragments/inputField :: input ('Password', 'password', 'password', null)}" />
+        <input
+                th:replace="~{fragments/inputField :: input ('Matching password', 'matchingPassword', 'password', null)}" />
+
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-default" type="submit">Modify profile</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

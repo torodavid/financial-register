@@ -9,11 +9,11 @@
     <div class="form-group has-feedback">
         <input type="hidden" th:value="${cashFlow.id}" name="id" />
         <input
-                th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />
+                th:replace="~{fragments/inputField :: input ('Name', 'name', 'text', false)}" />
         <input
-                th:replace="~{fragments/inputField :: input ('Description', 'description', 'text')}" />
+                th:replace="~{fragments/inputField :: input ('Description', 'description', 'text', false)}" />
         <input
-                th:replace="~{fragments/inputField :: input ('Amount', 'amount', 'text')}" />
+                th:replace="~{fragments/inputField :: input ('Amount', 'amount', 'text', false)}" />
         <input
                 th:replace="~{fragments/selectField :: select ('Category', 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()})}" />
         <input

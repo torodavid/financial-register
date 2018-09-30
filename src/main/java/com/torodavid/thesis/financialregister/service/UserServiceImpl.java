@@ -5,12 +5,14 @@ import com.torodavid.thesis.financialregister.dal.dto.UserDto;
 import com.torodavid.thesis.financialregister.dal.repository.RoleRepository;
 import com.torodavid.thesis.financialregister.dal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +46,54 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Iterable<UserDto> getAllUsers() {
-        return userRepository.findAll().stream().map(user -> new UserDto(user.getId(), user.getUsername(), user.getEmail())).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(UserDto::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto getUserById(String id) {
+        return new UserDto((userRepository.findById(id).get()));
+    }
+
+    @Override
+    @Transactional
+    public void update(UserDto userDto) {
+        userRepository.setUserById(userDto.getId(), userDto.getEmail(), bCryptPasswordEncoder.encode(userDto.getPassword()));
+    }
+
+    @Override
+    public UserDto getUserDtoByUsername(String username) {
+        return new UserDto(userRepository.findByUsername(username));
+    }
+
+    @Override
+    public void deleteById(String id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<UserDto> findPaginated(PageRequest pageable, Optional<List<String>> ids) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<UserDto> list;
+
+        List<UserDto> userDtos = new ArrayList<>();
+        if (ids.isPresent()) {
+            getAllUsers().forEach(userDto -> { if (ids.get().contains(userDto.getId())) userDtos.add(userDto); } );
+        } else {
+            getAllUsers().forEach(userDtos::add);
+        }
+        if (userDtos.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, userDtos.size());
+            list = userDtos.subList(startItem, toIndex);
+        }
+
+        Page<UserDto> cashFlowPage
+                = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), userDtos.size());
+
+        return cashFlowPage;
     }
 
 }

@@ -105,7 +105,7 @@ public class CashFlowController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listBooks(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+    public String listCashFlows(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
         page.ifPresent(p -> currentPage = p);
         size.ifPresent(s -> pageSize = s);
 

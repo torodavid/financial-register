@@ -1,46 +1,44 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::body},'cashFlow')}">
+      th:replace="~{fragments/layout :: layout (~{::body},'userDetails')}">
 
 <body>
 
 <h2 th:text="#{users.list.title}">form</h2>
 
-<table class="table table-striped" th:object="${users}">
+<table class="table table-striped" th:object="${userDtoPage}">
     <thead class="table-primary">
     <tr>
         <th>NAME</th>
         <th>EMAIL</th>
         <th>Modisitas</th>
+        <th>Torles</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user : ${users}" th:title="${title}">
+    <tr th:each="user, iStat : ${userDtoPage.content}" th:title="${title}">
         <td th:text="${user.username}">Kisnyul</td>
         <td th:text="${user.email}">Bazinagy kisnyul</td>
-        <td> <a th:href="@{modify/__${user.id}__}">Modify</a></td>
+        <td> <a th:href="@{profile/__${user.username}__}">Modify</a></td>
+        <td> <a th:href="@{delete/__${user.id}__}">Delete</a></td>
     </tr>
     </tbody>
 </table>
 
-<nav aria-label="...">
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active">
-            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
-<br/>
-
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <div class="d-flex flex-wrap" th:if="${userDtoPage.totalPages > 0}">
+                <div th:each="pageNumber : ${pageNumbers}" class="page-item"
+                     th:classappend="${pageNumber==userDtoPage.number + 1} ? active">
+                    <a class="page-link"
+                       th:href="@{/users/list(size=${userDtoPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
-
 </html>
