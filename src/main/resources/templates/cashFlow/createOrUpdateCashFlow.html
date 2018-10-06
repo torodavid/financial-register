@@ -2,30 +2,34 @@
       th:replace="~{fragments/layout :: layout (~{::body},'cashFlow')}">
 
 <body>
-
-<h2>CashFlow create or update</h2>
-<h2 th:if="${redirected}">No result, but lets create!</h2>
-<form th:object="${cashFlow}" class="form-horizontal" id="add-cash-flow-form" method="post">
-    <div class="form-group has-feedback">
-        <input type="hidden" th:value="${cashFlow.id}" name="id"/>
-        <input
-                th:replace="~{fragments/inputField :: input ('Name', 'name', 'text', false)}"/>
-        <input
-                th:replace="~{fragments/inputField :: input ('Description', 'description', 'text', false)}"/>
-        <input
-                th:replace="~{fragments/inputField :: input ('Amount', 'amount', 'text', false)}"/>
-        <input
-                th:replace="~{fragments/selectField :: select ('Category', 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()})}"/>
-        <input
-                th:replace="~{fragments/selectField :: select ('Flow Direction', 'flowDirection', ${T(com.torodavid.thesis.financialregister.dal.enums.FlowDirection).values()})}"/>
-        <input
-                th:replace="~{fragments/selectField :: select ('Priority', 'priority', ${T(com.torodavid.thesis.financialregister.dal.enums.Priority).values()})}"/>
+<div class="container">
+    <div class="row">
+        <dl class="Absolute-Center is-Responsive">
+            <h1 class="text-center" th:text="#{createOrUpdateCashFlow.header}"></h1>
+            <div th:if="${redirected}"><h2 th:text="#{createOrUpdateCashFlow.header.noResult}"></h2></div>
+            <form th:object="${cashFlow}" class="form-horizontal" id="add-cash-flow-form" method="post">
+                <dl class="row">
+                    <input type="hidden" th:value="${cashFlow.id}" name="id"/>
+                    <input
+                            th:replace="~{fragments/inputField :: input ('Name', 'name', 'text', false)}"/>
+                    <input
+                            th:replace="~{fragments/inputField :: input ('Description', 'description', 'text', false)}"/>
+                    <input
+                            th:replace="~{fragments/inputField :: input ('Amount', 'amount', 'text', false)}"/>
+                    <input
+                            th:replace="~{fragments/selectField :: select ('Category', 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()})}"/>
+                    <input
+                            th:replace="~{fragments/selectField :: select ('Flow Direction', 'flowDirection', ${T(com.torodavid.thesis.financialregister.dal.enums.FlowDirection).values()})}"/>
+                    <input
+                            th:replace="~{fragments/selectField :: select ('Priority', 'priority', ${T(com.torodavid.thesis.financialregister.dal.enums.Priority).values()})}"/>
+                </dl>
+                <div class="form-group">
+                    <button class="btn btn-def btn-block" type="submit"
+                            th:text="#{createOrUpdateCashFlow.submit}"></button>
+                </div>
+            </form>
     </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-default" type="submit">Add or update cash-flow</button>
-        </div>
-    </div>
-</form>
+</div>
+</div>
 </body>
 </html>

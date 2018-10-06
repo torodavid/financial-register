@@ -1,33 +1,41 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout (~{::body},'registration')}">
 <body>
-<h1 th:text="#{users.registration.form.title}">form</h1>
-<form th:object="${userDto}" method="POST">
-    <div>
-        <label th:text="#{label.user.username}">first</label>
-        <input th:field="*{username}"/>
-        <p th:each="error: ${#fields.errors('username')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.email}">email</label>
-        <input type="email" th:field="*{email}"/>
-        <p th:each="error : ${#fields.errors('email')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.password}">password</label>
-        <input type="password" th:field="*{password}"/>
-        <p th:each="error : ${#fields.errors('password')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.confirmPass}">confirm</label>
-        <input type="password" th:field="*{matchingPassword}"/>
-    </div>
-    <button type="submit" th:text="#{label.form.submit}">submit</button>
-</form>
 
-<a th:href="@{/users/login}" th:text="#{users.login.button}">login</a>
+
+<div class="container">
+    <div class="row">
+        <div class="Absolute-Center is-Responsive">
+            <h1 th:text="#{users.registration.form.title}" class="text-center">form</h1>
+            <form th:object="${userDto}" method="POST">
+                <div>
+                    <dl class="row">
+                        <dt class="col-sm-6"><label th:text="#{label.user.username}">first</label></dt>
+                        <dd class="col-sm-6"><input th:field="*{username}"/>
+                            <p th:each="error: ${#fields.errors('username')}"
+                               th:text="${error}">Validation error</p></dd>
+
+                        <dt class="col-sm-6"><label th:text="#{label.user.email}">email</label></dt>
+                        <dd class="col-sm-6"><input type="email" th:field="*{email}"/>
+                            <p th:each="error : ${#fields.errors('email')}"
+                               th:text="${error}">Validation error</p></dd>
+
+                        <dt class="col-sm-6"><label th:text="#{label.user.password}">password</label></dt>
+                        <dd class="col-sm-6"><input type="password" th:field="*{password}"/>
+                            <p th:each="error : ${#fields.errors('password')}"
+                               th:text="${error}">Validation error</p></dd>
+
+                        <dt class="col-sm-6"><label th:text="#{label.user.confirmPass}">confirm</label></dt>
+                        <dd class="col-sm-6"><input type="password" th:field="*{matchingPassword}"/></dd>
+                    </dl>
+                    <button type="submit" th:text="#{user.registration.form.submit}" class="btn btn-def btn-block">submit</button>
+                </div>
+            </form>
+            <a th:href="@{/users/login}" th:text="#{user.registration.toLogin}">login</a>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>

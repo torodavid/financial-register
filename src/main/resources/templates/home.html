@@ -1,19 +1,24 @@
 <!DOCTYPE html >
 
-<html th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+<html th:replace="~{fragments/layout :: layout (~{::body},'home')}" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
+<div class="container">
+    <div class="row">
+        <div class="Absolute-Center is-Responsive">
+            <div class="row" sec:authorize="isAuthenticated()">
+                <div class="col-md-12">
+                    <h1 class="text-center" th:text="#{label.home.welcome} + ' ' + ${#authentication.getPrincipal().getUsername()}+ '!'"></h1>
+                </div>
+            </div>
 
-<div class="row" sec:authorize="isAuthenticated()">
-    <div class="col-md-12">
-        <h2 th:text ="#{label.home.welcome} + ' ' + ${#authentication.getPrincipal().getUsername()}+ '!'"></h2>
+            <div class="row" sec:authorize="hasRole('ROLE_ANONYMOUS')">
+                <div class="col-md-12">
+                    <h1 class="text-center" th:text="#{label.home.welcome.anonymous}"></h1>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<div class="row" sec:authorize="hasRole('ROLE_ANONYMOUS')">
-    <div class="col-md-12">
-        <h2 th:text="#{label.home.welcome} + '!'"></h2>
-    </div>
-</div>
-
 </body>
 </html>

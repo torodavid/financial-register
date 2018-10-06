@@ -1,5 +1,6 @@
 <!doctype html>
-<html th:fragment="layout(template, menu)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html th:fragment="layout(template, menu)" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
 
@@ -35,7 +36,7 @@
 
             <li sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="cashFlowDropDown" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
+                   aria-haspopup="true" aria-expanded="false" th:text="#{layout.navbar.dropdown.cashFlow}">
                     Pénzmozgás
                 </a>
                 <div class="dropdown-menu" aria-labelledby="cashFlowDropDown">
@@ -45,11 +46,16 @@
                 </div>
             </li>
 
-            <li th:replace="::menuItem ('/users/list','userDetails','Felhasználók oldala','search','Felhasználók')" sec:authorize="hasRole('ROLE_ADMIN')"></li>
-            <li th:replace="::menuItem ('/users/registration','registration','Regisztrációs oldal','registration','Regisztráció')" sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
-            <li th:replace="::menuItem ('/users/login','login','Bejelentkező oldal','login','Bejelentkezés')" sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
-            <li th:replace="::menuItem ('/users/logout','logout','Kijelentkezls oldala','logout','Kijelentkezés')" sec:authorize="isAuthenticated()"></li>
-            <li th:replace="::menuItem ('/users/profile/' + ${#authentication.getPrincipal().getUsername()},'profile','Profile','profile','Profile')" sec:authorize="isAuthenticated()"></li>
+            <li th:replace="::menuItem ('/users/list','userDetails','Felhasználók oldala','search',#{layout.navbar.menuItem.users})"
+                sec:authorize="hasRole('ROLE_ADMIN')"></li>
+            <li th:replace="::menuItem ('/users/registration','registration','Regisztrációs oldal','registration',#{layout.navbar.menuItem.registration})"
+                sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
+            <li th:replace="::menuItem ('/users/login','login','Bejelentkező oldal','login',#{layout.navbar.menuItem.login})"
+                sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
+            <li th:replace="::menuItem ('/users/logout','logout','Kijelentkezls oldala','logout',#{layout.navbar.menuItem.logout})"
+                sec:authorize="isAuthenticated()"></li>
+            <li th:replace="::menuItem ('/users/profile/' + ${#authentication.getPrincipal().getUsername()},'profile','Profile','profile',#{layout.navbar.menuItem.profile})"
+                sec:authorize="isAuthenticated()"></li>
         </ul>
     </div>
     <div class="collapse navbar-collapse" sec:authorize="isAuthenticated()">
@@ -64,18 +70,7 @@
 </nav>
 <div class="container-fluid">
     <div class="container xd-container">
-
-        <th:block th:include="${template}"/>
-
-        <br/>
-        <br/>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-
-                </div>
-            </div>
-        </div>
+            <th:block th:include="${template}"/>
     </div>
 </div>
 <script th:src="@{/resources/jquery/jquery-3.3.1.min.js}"></script>

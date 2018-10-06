@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
       th:replace="~{fragments/layout :: layout (~{::body},'cashFlows')}">
 
 <body>
 
-<h2>Cash-flows</h2>
+<h1 class="text-center" th:text="#{cashFlow.details.header}">Cash-flows</h1>
 
 <table class="table table-striped" th:object="${cashFlowPage}">
     <thead class="table-primary">
     <tr>
-        <th>NAME</th>
-        <th>DESCRIPTION</th>
-        <th>AMOUNT</th>
-        <th>CATEGORY</th>
-        <th>PRIORITY</th>
-        <th>FLOW DIRECTION</th>
-        <th sec:authorize="!hasRole('ROLE_ADMIN')">Modisitas</th>
-        <th sec:authorize="!hasRole('ROLE_ADMIN')">Torles</th>
+        <th th:text="#{cashFlow.details.table.name}">NAME</th>
+        <th th:text="#{cashFlow.details.table.description}">DESCRIPTION</th>
+        <th th:text="#{cashFlow.details.table.amount}">AMOUNT</th>
+        <th th:text="#{cashFlow.details.table.category}">CATEGORY</th>
+        <th th:text="#{cashFlow.details.table.priority}">PRIORITY</th>
+        <th th:text="#{cashFlow.details.table.direction}">FLOW DIRECTION</th>
+        <th th:text="#{cashFlow.details.table.modify}" sec:authorize="!hasRole('ROLE_ADMIN')">Modisitas</th>
+        <th th:text="#{cashFlow.details.table.delete}" sec:authorize="!hasRole('ROLE_ADMIN')">Torles</th>
     </tr>
     </thead>
     <tbody>

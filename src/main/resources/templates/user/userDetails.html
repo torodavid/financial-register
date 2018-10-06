@@ -5,15 +5,15 @@
 
 <body>
 
-<h2 th:text="#{users.list.title}">form</h2>
+<h1 class="text-center" th:text="#{users.list.title}">form</h1>
 
 <table class="table table-striped" th:object="${userDtoPage}">
     <thead class="table-primary">
     <tr>
-        <th>NAME</th>
-        <th>EMAIL</th>
-        <th>Modisitas</th>
-        <th>Torles</th>
+        <th th:text="#{user.details.table.name}">NAME</th>
+        <th th:text="#{user.details.table.email}">EMAIL</th>
+        <th th:text="#{user.details.table.modify}">Modisitas</th>
+        <th th:text="#{user.details.table.delete}">Torles</th>
     </tr>
     </thead>
     <tbody>

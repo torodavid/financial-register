@@ -4,10 +4,16 @@
       th:replace="~{fragments/layout :: layout (~{::body},'cashFlow')}">
 
 <body>
+<div class="container">
+    <div class="row">
+        <div class="Absolute-Center is-Responsive">
+            <h1 class="text-center" th:text="#{error.accesDenied}">a</h1>
+            <div>
+                <p class="text-center"><a href="/" th:href="@{/}">Vissza a kezdolapra</a></p>
+            </div>
+        </div>
 
-<div>
-    <h1>Hozzáférés megtagadva</h1>
-    <p><a href="/" th:href="@{/}">Vissza a kezdolapra</a></p>
+    </div>
 </div>
 </body>
 </html>
