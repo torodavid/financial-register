@@ -2,26 +2,28 @@ package com.torodavid.thesis.financialregister.dal.dto;
 
 import com.torodavid.thesis.financialregister.dal.dao.User;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class UserDto {
 
-    @NotNull
-    @NotEmpty
     private String id;
-
     @NotNull
     @NotEmpty
+    @Size(min=4, max=20)
     private String username;
 
     @NotNull
     @NotEmpty
+    @Size(min=5, max=10)
     private String password;
     private String matchingPassword;
 
     @NotNull
     @NotEmpty
+    @Email
     private String email;
 
     public UserDto() {

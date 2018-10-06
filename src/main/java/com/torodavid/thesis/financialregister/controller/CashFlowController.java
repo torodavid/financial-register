@@ -10,19 +10,19 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 @Controller
 @RequestMapping(value = "/cashFlow")
 public class CashFlowController {
 
     private static int currentPage = 1;
-    private static int pageSize = 10;
+    private static int pageSize = 20;
 
     private static final String CASH_FLOW_CREATE_OR_UPDATE = "cashFlow/createOrUpdateCashFlow";
 
@@ -59,16 +59,18 @@ public class CashFlowController {
     }
 
     @GetMapping("/new")
-    public String initCreationForm(Map<String, Object> model) {
-        CashFlow cashFlow = new CashFlow();
-        model.put("cashFlow", cashFlow);
+    public String initCreationForm(CashFlow cashFlow, Model model) {
+        model.addAttribute("cashFlow", cashFlow);
         return CASH_FLOW_CREATE_OR_UPDATE;
     }
 
     @PostMapping("/new")
-    public String processCreationForm(CashFlow cashFlow) {
-        Long id = cashFlowService.save(cashFlow).getId();
-        return "redirect:/cashFlow/list";
+    public String processCreationForm(@Valid CashFlow cashFlow, BindingResult result, Model model) {
+        if (!result.hasErrors()) {
+            cashFlowService.save(cashFlow).getId();
+            return "redirect:/cashFlow/list";
+        }
+        return initCreationForm(cashFlow, model);
     }
 
     @GetMapping("/modify/{cashFlowId}")

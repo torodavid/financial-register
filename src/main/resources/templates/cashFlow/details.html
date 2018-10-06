@@ -7,7 +7,6 @@
 
 <h2>Cash-flows</h2>
 
-
 <table class="table table-striped" th:object="${cashFlowPage}">
     <thead class="table-primary">
     <tr>
@@ -17,8 +16,8 @@
         <th>CATEGORY</th>
         <th>PRIORITY</th>
         <th>FLOW DIRECTION</th>
-        <th>Modisitas</th>
-        <th>Torles</th>
+        <th sec:authorize="!hasRole('ROLE_ADMIN')">Modisitas</th>
+        <th sec:authorize="!hasRole('ROLE_ADMIN')">Torles</th>
     </tr>
     </thead>
     <tbody>
@@ -29,8 +28,8 @@
         <td th:text="${cashFlow.category.name}">Szorakozas</td>
         <td th:text="${cashFlow.priority.name}">FONTOS NYUL</td>
         <td th:text="${cashFlow.flowDirection.name}">Kiadas</td>
-        <td><a th:href="@{modify/__${cashFlow.id}__}">Modify</a></td>
-        <td><a th:href="@{delete/__${cashFlow.id}__}">Delete</a></td>
+        <td sec:authorize="!hasRole('ROLE_ADMIN')"><a th:href="@{modify/__${cashFlow.id}__}">Modify</a></td>
+        <td sec:authorize="!hasRole('ROLE_ADMIN')"><a th:href="@{delete/__${cashFlow.id}__}">Delete</a></td>
     </tr>
     </tbody>
 </table>

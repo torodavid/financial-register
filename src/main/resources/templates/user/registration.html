@@ -2,7 +2,7 @@
       th:replace="~{fragments/layout :: layout (~{::body},'registration')}">
 <body>
 <h1 th:text="#{users.registration.form.title}">form</h1>
-<form th:object="${user}" method="POST">
+<form th:object="${userDto}" method="POST">
     <div>
         <label th:text="#{label.user.username}">first</label>
         <input th:field="*{username}"/>

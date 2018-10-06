@@ -7,19 +7,19 @@
 <h2 th:if="${redirected}">No result, but lets create!</h2>
 <form th:object="${cashFlow}" class="form-horizontal" id="add-cash-flow-form" method="post">
     <div class="form-group has-feedback">
-        <input type="hidden" th:value="${cashFlow.id}" name="id" />
+        <input type="hidden" th:value="${cashFlow.id}" name="id"/>
         <input
-                th:replace="~{fragments/inputField :: input ('Name', 'name', 'text', false)}" />
+                th:replace="~{fragments/inputField :: input ('Name', 'name', 'text', false)}"/>
         <input
-                th:replace="~{fragments/inputField :: input ('Description', 'description', 'text', false)}" />
+                th:replace="~{fragments/inputField :: input ('Description', 'description', 'text', false)}"/>
         <input
-                th:replace="~{fragments/inputField :: input ('Amount', 'amount', 'text', false)}" />
+                th:replace="~{fragments/inputField :: input ('Amount', 'amount', 'text', false)}"/>
         <input
-                th:replace="~{fragments/selectField :: select ('Category', 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()})}" />
+                th:replace="~{fragments/selectField :: select ('Category', 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()})}"/>
         <input
-                th:replace="~{fragments/selectField :: select ('Flow Direction', 'flowDirection', ${T(com.torodavid.thesis.financialregister.dal.enums.FlowDirection).values()})}" />
+                th:replace="~{fragments/selectField :: select ('Flow Direction', 'flowDirection', ${T(com.torodavid.thesis.financialregister.dal.enums.FlowDirection).values()})}"/>
         <input
-                th:replace="~{fragments/selectField :: select ('Priority', 'priority', ${T(com.torodavid.thesis.financialregister.dal.enums.Priority).values()})}" />
+                th:replace="~{fragments/selectField :: select ('Priority', 'priority', ${T(com.torodavid.thesis.financialregister.dal.enums.Priority).values()})}"/>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

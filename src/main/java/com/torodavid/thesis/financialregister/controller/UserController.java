@@ -1,9 +1,7 @@
 package com.torodavid.thesis.financialregister.controller;
 
 import com.torodavid.thesis.financialregister.dal.dto.UserDto;
-import com.torodavid.thesis.financialregister.service.SecurityService;
 import com.torodavid.thesis.financialregister.service.UserService;
-import com.torodavid.thesis.financialregister.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,9 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,23 +32,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private UserValidator userValidator;
-
     @GetMapping("/registration")
-    public String showRegistrationForm(WebRequest request, Model model) {
-        UserDto userDto = new UserDto();
-        model.addAttribute("user", userDto);
-        return "user/registration";
+    public ModelAndView showRegistrationForm(Model model, UserDto accountDto) {
+        model.addAttribute("userDto", accountDto);
+        return new ModelAndView("user/registration");
     }
 
     @PostMapping("/registration")
-    public String registerUserAccount(UserDto accountDto) {
-        userService.register(accountDto);
-        return "home";
+    public ModelAndView registerUserAccount(@Valid UserDto accountDto, BindingResult result, Model model) {
+        if (!result.hasErrors()) {
+            userService.register(accountDto);
+            return new ModelAndView("success");
+        }
+        return showRegistrationForm(model, accountDto);
     }
 
     @GetMapping("/login")

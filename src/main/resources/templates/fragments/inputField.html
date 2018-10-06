@@ -12,6 +12,8 @@
                     <input th:case="'email'" class="form-control" type="email" th:field="*{__${name}__}" />
                     <input th:case="'password'" class="form-control" type="password" th:field="*{__${name}__}" />
                 </div>
+                <p th:each="error: ${#fields.errors(name)}"
+                   th:text="${error}">Validation error</p>
             </div>
     </th:block>
 </form>

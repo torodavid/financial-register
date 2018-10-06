@@ -3,8 +3,13 @@ package com.torodavid.thesis.financialregister.dal.dao;
 import com.torodavid.thesis.financialregister.dal.enums.Category;
 import com.torodavid.thesis.financialregister.dal.enums.FlowDirection;
 import com.torodavid.thesis.financialregister.dal.enums.Priority;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,6 +18,9 @@ public class CashFlow {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+    @NotNull
+    @NotEmpty
+    @Size(min=3, max=20)
     private String name;
     private String description;
     private int amount;
@@ -21,6 +29,10 @@ public class CashFlow {
     private Priority priority;
     private Category category;
     private FlowDirection flowDirection;
+    /**
+     * invalid kulso kulcsokat ignoralja az EntityManager, ha admin akarna rakeresni osszes cashFlowra
+     */
+    @NotFound(action=NotFoundAction.IGNORE)
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
