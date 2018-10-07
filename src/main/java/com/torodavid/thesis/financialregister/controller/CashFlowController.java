@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,32 +30,13 @@ public class CashFlowController {
     @Autowired
     private CashFlowService cashFlowService;
 
-    /*@GetMapping("")
-    public String processFindForm(CashFlow cashFlow, BindingResult result, Map<String, Object> model) {
-
-        Iterable<CashFlow> cashFlowsByName = cashFlowService.findAllCashFlowsByName(cashFlow.getName());
-
-        if (!cashFlowsByName.iterator().hasNext()) {
-            //result.rejectValue("kisnyul", "notFound", "not found");
-            model.put("redirected", true);
-            return CASH_FLOW_CREATE_OR_UPDATE;
-        } else {
-            List<Long> cashFlowIds = StreamSupport.stream(cashFlowsByName.spliterator(), true).map(cf -> cf.getId()).collect(Collectors.toList());
-            return "redirect:/cashFlow/" + cashFlowIds.toString()
-                    .replace("[", "")
-                    .replace("]", "")
-                    .trim();
-        }
-    }*/
-
     @GetMapping("")
     public String findCashFlow(CashFlow cashFlow, BindingResult result, Map<String, Object> model) {
         Optional<CashFlow> cashFlowByName = cashFlowService.findCashFlowByName(cashFlow.getName());
         if (cashFlowByName.isPresent()) {
             return "redirect:/cashFlow/" + cashFlowByName.get().getId();
         } else {
-            model.put("redirected", true);
-            return CASH_FLOW_CREATE_OR_UPDATE;
+            return initFindForm(model, true);
         }
     }
 
@@ -74,7 +56,7 @@ public class CashFlowController {
     }
 
     @GetMapping("/modify/{cashFlowId}")
-    public String modifyCashFlow(Map<String, Object> model, @PathVariable("cashFlowId") Long id) {
+    public String modifyCashFlow(Map<String, Object> model, @PathVariable("cashFlowId") String id) {
         CashFlow kisnyul = cashFlowService.getCashFlowById(id).get();
         model.put("cashFlow", kisnyul);
         return CASH_FLOW_CREATE_OR_UPDATE;
@@ -87,13 +69,13 @@ public class CashFlowController {
     }
 
     @GetMapping("/delete/{cashFlowId}")
-    public String deleteCashFlow(@PathVariable("cashFlowId") Long id) {
+    public String deleteCashFlow(@PathVariable("cashFlowId") String id) {
         cashFlowService.deleteCashFlowById(id);
         return "redirect:/cashFlow/list";
     }
 
     @GetMapping("/{cashFlowIds}")
-    public String showCashFlows(@PathVariable("cashFlowIds") List<Long> cashFlowIds, Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+    public String showCashFlows(@PathVariable("cashFlowIds") List<String> cashFlowIds, Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
         currentPage = 1;
         size.ifPresent(s -> pageSize = s);
 
@@ -112,8 +94,9 @@ public class CashFlowController {
     }
 
     @GetMapping("/find")
-    public String initFindForm(Map<String, Object> model) {
+    public String initFindForm(Map<String, Object> model, Boolean redirected) {
         model.put("cashFlow", new CashFlow());
+        model.put("redirected", redirected);
         return "cashFlow/findCashFlow";
     }
 

@@ -19,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -35,14 +37,18 @@ public class CashFlowService {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByUsername(userDetails.getUsername());
         cashFlow.setUser(user);
+        cashFlow.setModificationDate(LocalDateTime.now());
+        cashFlow.setCreationDate(LocalDateTime.now());
+        cashFlow.setId(UUID.randomUUID().toString());
         return cashFlowRepository.save(cashFlow);
     }
 
     @Transactional
     public void update(CashFlow cashFlow) {
-        cashFlowRepository.setCashFlowById(cashFlow.getName(), cashFlow.getDescription(), cashFlow.getAmount(), cashFlow.getCategory(), cashFlow.getFlowDirection(), cashFlow.getPriority(), cashFlow.getId());
+        cashFlowRepository.setCashFlowById(cashFlow.getName(), cashFlow.getDescription(), cashFlow.getAmount(), cashFlow.getCategory(), cashFlow.getFlowDirection(), cashFlow.getPriority(), cashFlow.getId(), LocalDateTime.now());
     }
 
+    @Transactional
     public void generateCashFlowsToCurrentUser() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByUsername(userDetails.getUsername());
@@ -50,11 +56,14 @@ public class CashFlowService {
         Priority[] priorities = Priority.values();
 
         for (int i = 1; i < 36; i++) {
-            cashFlowRepository.save(new CashFlow("Fizetés " + i, "Fizetés leírása " + i, new Random().nextInt((250000 - 200000) + 1) + 200000, LocalDateTime.now().minusMonths(i), LocalDateTime.now(), Priority.ONE, Category.SALARY, FlowDirection.IN, user));
+            String name1 = "Fizetés " + i;
+            cashFlowRepository.save(new CashFlow(UUID.randomUUID().toString(), name1, "Fizetés leírása " + i, new Random().nextInt((250000 - 200000) + 1) + 200000, LocalDateTime.now().minusMonths(i), LocalDateTime.now(), Priority.ONE, Category.SALARY, FlowDirection.IN, user));
             long limit = new Random().nextInt((50 - 30) + 30);
             for (int j = new Integer(1); limit-- > 0; j++) {
+                String name = "Minta pénzmozgás" + i + "." + j;
                 cashFlowRepository.save(new CashFlow(
-                        "Minta pénzmozgás" + i + "." + j,
+                        UUID.randomUUID().toString(),
+                        name,
                         "Minta pénzmozgás leírása" + i + "." + j,
                         new Random().nextInt((15000 - 5000) + 1) + 5000,
                         LocalDateTime.now().minusMonths(i),
@@ -69,7 +78,7 @@ public class CashFlowService {
 
     }
 
-    public Page<CashFlow> findPaginated(Pageable pageable, Optional<List<Long>> ids) {
+    public Page<CashFlow> findPaginated(Pageable pageable, Optional<List<String>> ids) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
@@ -99,7 +108,7 @@ public class CashFlowService {
         return userService.findByUsername(userDetails.getUsername());
     }
 
-    public Optional<CashFlow> getCashFlowById(Long id) {
+    public Optional<CashFlow> getCashFlowById(String id) {
         return cashFlowRepository.findById(id);
     }
 
@@ -141,7 +150,7 @@ public class CashFlowService {
         return cashFlowRepository.getAllCashFlowsByPriority(priority);
     }
 
-    public Iterable<CashFlow> findAllCashFlowsByIds(List<Long> ids) {
+    public Iterable<CashFlow> findAllCashFlowsByIds(List<String> ids) {
         return cashFlowRepository.findAllById(ids);
     }
 
@@ -155,7 +164,7 @@ public class CashFlowService {
         return cashFlowRepository.findAllByUser(user);
     }
 
-    public void deleteCashFlowById(Long id) {
+    public void deleteCashFlowById(String id) {
         cashFlowRepository.deleteById(id);
     }
 

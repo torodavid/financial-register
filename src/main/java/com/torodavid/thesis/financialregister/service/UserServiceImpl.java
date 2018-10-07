@@ -33,6 +33,8 @@ public class UserServiceImpl implements UserService {
         user.setId(UUID.randomUUID().toString());
         user.setPassword(userDto.getPassword());
         user.setUsername(userDto.getUsername());
+        user.setSurname(userDto.getSurname());
+        user.setForename(userDto.getForename());
         user.setEmail(userDto.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         user.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByName("ROLE_USER"))));
@@ -57,7 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void update(UserDto userDto) {
-        userRepository.setUserById(userDto.getId(), userDto.getEmail(), bCryptPasswordEncoder.encode(userDto.getPassword()));
+        userRepository.setUserById(userDto.getId(), userDto.getEmail(), bCryptPasswordEncoder.encode(userDto.getPassword()), userDto.getSurname(), userDto.getForename());
     }
 
     @Override

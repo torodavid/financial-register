@@ -61,27 +61,33 @@ public class UserController {
     }
 
     @GetMapping("/profile/{username}")
-    public String modifyUser(Map<String, Object> model, @PathVariable("username") String username) {
+    public ModelAndView modifyUser(UserDto userDto, @PathVariable("username") String username, Model model) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ModelAndView modelAndView = new ModelAndView();
         if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) || userDetails.getUsername().equals(username)) {
 
-            UserDto userDto = userService.getUserDtoByUsername(username);
-            model.put("userDto", userDto);
-            return "user/profile";
+            UserDto userDto2 = userService.getUserDtoByUsername(username);
+            model.addAttribute("userDto", userDto2);
+
+            modelAndView.setViewName("user/profile");
         } else {
-            return "redirect:/users/access-denied";
+            modelAndView.setViewName("error/access-denied");
         }
+        return modelAndView;
     }
 
     @PostMapping("/profile/{username}")
-    public String processModifyUserForm(UserDto userDto) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) || userDetails.getUsername().equals(userDto.getUsername())) {
-            userService.update(userDto);
-            return "redirect:/home";
-        } else {
-            return "redirect:/users/access-denied";
+    public ModelAndView processModifyUserForm(@Valid UserDto userDto, BindingResult result, Model model) {
+        if (!result.hasErrors()) {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) || userDetails.getUsername().equals(userDto.getUsername())) {
+                userService.update(userDto);
+                return new ModelAndView("success");
+            } else {
+                return new ModelAndView("error/access-denied");
+            }
         }
+        return modifyUser(userDto, userDto.getUsername(), model);
     }
 
     @GetMapping("/delete/{userId}")

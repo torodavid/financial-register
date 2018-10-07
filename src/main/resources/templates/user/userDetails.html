@@ -10,6 +10,7 @@
 <table class="table table-striped" th:object="${userDtoPage}">
     <thead class="table-primary">
     <tr>
+        <th th:text="#{user.details.table.username}">USERNAME</th>
         <th th:text="#{user.details.table.name}">NAME</th>
         <th th:text="#{user.details.table.email}">EMAIL</th>
         <th th:text="#{user.details.table.modify}">Modisitas</th>
@@ -19,6 +20,7 @@
     <tbody>
     <tr th:each="user, iStat : ${userDtoPage.content}" th:title="${title}">
         <td th:text="${user.username}">Kisnyul</td>
+        <td th:text="${user.surname} + ' ' + ${user.forename}">Kisnyul</td>
         <td th:text="${user.email}">Bazinagy kisnyul</td>
         <td> <a th:href="@{profile/__${user.username}__}">Modify</a></td>
         <td> <a th:href="@{delete/__${user.id}__}">Delete</a></td>

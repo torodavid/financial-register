@@ -14,6 +14,14 @@ public class UserDto {
     @NotEmpty
     @Size(min=4, max=20)
     private String username;
+    @NotNull
+    @NotEmpty
+    @Size(min=3, max=20)
+    private String surname;
+    @NotNull
+    @NotEmpty
+    @Size(min=3, max=20)
+    private String forename;
 
     @NotNull
     @NotEmpty
@@ -29,14 +37,16 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(@NotNull @NotEmpty String id, @NotNull @NotEmpty String username, @NotNull @NotEmpty String email, String password, String matchingPassword) {
+    public UserDto(@NotNull @NotEmpty String id, @NotNull @NotEmpty String username, @NotNull @NotEmpty String surname, @NotNull @NotEmpty String forename, @NotNull @NotEmpty String email, String password, String matchingPassword) {
         this.id = id;
         this.username = username;
+        this.surname = surname;
+        this.forename = forename;
         this.email = email;
     }
 
     public UserDto(User user) {
-        this(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getPasswordConfirm());
+        this(user.getId(), user.getUsername(), user.getSurname(), user.getForename(), user.getEmail(), user.getPassword(), user.getPasswordConfirm());
     }
 
     public String getId() {
@@ -77,5 +87,21 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getForename() {
+        return forename;
+    }
+
+    public void setForename(String forename) {
+        this.forename = forename;
     }
 }

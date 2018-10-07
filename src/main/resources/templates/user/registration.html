@@ -7,28 +7,50 @@
     <div class="row">
         <div class="Absolute-Center is-Responsive">
             <h1 th:text="#{users.registration.form.title}" class="text-center">form</h1>
-            <form th:object="${userDto}" method="POST">
+            <form th:object="${userDto}" method="POST" class="needs-validation" novalidate>
                 <div>
                     <dl class="row">
                         <dt class="col-sm-6"><label th:text="#{label.user.username}">first</label></dt>
-                        <dd class="col-sm-6"><input th:field="*{username}"/>
-                            <p th:each="error: ${#fields.errors('username')}"
-                               th:text="${error}">Validation error</p></dd>
+                        <dd class="col-sm-6"><input th:maxlength="20" class="form-control" th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : '' " th:field="*{username}"/>
+                            <div th:classappend="${#fields.hasErrors('username')} ? 'invalid-feedback' : '' " class="" th:each="error: ${#fields.errors('username')}"
+                               th:text="${error}">Validation error</div></dd>
+
+                        <dt class="col-sm-6"><label th:text="#{label.user.surname}">first</label></dt>
+                        <dd class="col-sm-6"><input th:maxlength="20" class="form-control" th:classappend="${#fields.hasErrors('surname')} ? 'is-invalid' : '' " th:field="*{surname}"/>
+
+                            <div th:classappend="${#fields.hasErrors('surname')} ? 'invalid-feedback' : '' " th:each="error: ${#fields.errors('surname')}"
+                               th:text="${error}">Validation error</div></dd>
+
+                        <dt class="col-sm-6"><label th:text="#{label.user.forename}">first</label></dt>
+                        <dd class="col-sm-6"><input th:maxlength="20" class="form-control" th:classappend="${#fields.hasErrors('forename')} ? 'is-invalid' : '' " th:field="*{forename}"/>
+                            <div th:classappend="${#fields.hasErrors('forename')} ? 'invalid-feedback' : '' " th:each="error: ${#fields.errors('forename')}"
+                               th:text="${error}">Validation error</div></dd>
 
                         <dt class="col-sm-6"><label th:text="#{label.user.email}">email</label></dt>
-                        <dd class="col-sm-6"><input type="email" th:field="*{email}"/>
-                            <p th:each="error : ${#fields.errors('email')}"
-                               th:text="${error}">Validation error</p></dd>
+                        <dd class="col-sm-6">
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">@</div>
+                                </div>
+                                <input class="form-control" type="email" th:field="*{email}"/>
+                                <p th:each="error : ${#fields.errors('email')}"
+                                   th:text="${error}">Validation error</p>
+                            </div>
+                        </dd>
 
                         <dt class="col-sm-6"><label th:text="#{label.user.password}">password</label></dt>
-                        <dd class="col-sm-6"><input type="password" th:field="*{password}"/>
-                            <p th:each="error : ${#fields.errors('password')}"
-                               th:text="${error}">Validation error</p></dd>
+                        <dd class="col-sm-6"><input th:maxlength="10" class="form-control" th:classappend="${#fields.hasErrors('password')} ?  'is-invalid' : '' " type="password" th:field="*{password}"/>
+                            <div th:classappend="${#fields.hasErrors('password')} ?  'invalid-feedback' : '' " th:each="error : ${#fields.errors('password')}"
+                               th:text="${error}">Validation error</div></dd>
 
                         <dt class="col-sm-6"><label th:text="#{label.user.confirmPass}">confirm</label></dt>
-                        <dd class="col-sm-6"><input type="password" th:field="*{matchingPassword}"/></dd>
+                        <dd class="col-sm-6"><input class="form-control" type="password"
+                                                    th:field="*{matchingPassword}"/></dd>
                     </dl>
-                    <button type="submit" th:text="#{user.registration.form.submit}" class="btn btn-def btn-block">submit</button>
+                    <button type="submit" th:text="#{user.registration.form.submit}" class="btn btn-def btn-block">
+                        submit
+                    </button>
                 </div>
             </form>
             <a th:href="@{/users/login}" th:text="#{user.registration.toLogin}">login</a>

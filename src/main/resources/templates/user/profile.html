@@ -11,13 +11,17 @@
                 <dl class="row">
                     <input type="hidden" th:value="${userDto.id}" name="id"/>
                     <input
-                            th:replace="~{fragments/inputField :: input (#{user.profile.username}, 'username', 'text', true)}"/>
+                            th:replace="~{fragments/inputField :: input (#{user.profile.username}, 'username', 'text', true, '', 20)}"/>
                     <input
-                            th:replace="~{fragments/inputField :: input (#{user.profile.email}, 'email', 'email', null)}"/>
+                            th:replace="~{fragments/inputField :: input (#{user.profile.surname}, 'surname', 'text', false, '', 20)}"/>
                     <input
-                            th:replace="~{fragments/inputField :: input (#{user.profile.password}, 'password', 'password', null)}"/>
+                            th:replace="~{fragments/inputField :: input (#{user.profile.forename}, 'forename', 'text', false, '', 20)}"/>
                     <input
-                            th:replace="~{fragments/inputField :: input (#{user.profile.matchingPassword}, 'matchingPassword', 'password', null)}"/>
+                            th:replace="~{fragments/inputField :: input (#{user.profile.email}, 'email', 'email', null, '', 100)}"/>
+                    <input
+                            th:replace="~{fragments/inputField :: input (#{user.profile.password}, 'password', 'password', null, '', 10)}"/>
+                    <input
+                            th:replace="~{fragments/inputField :: input (#{user.profile.matchingPassword}, 'matchingPassword', 'password', null, '', 10)}"/>
 
                 </dl>
                 <div class="form-group">

@@ -37,20 +37,10 @@ public class DefaultController {
         return "about";
     }
 
-    /*@GetMapping("/login")
-    public String login() {
-        return "login";
-    }*/
 
     @GetMapping("/403")
     public String error403() {
         return "error/403";
-    }
-
-    @GetMapping(path="/generateTest")
-    public String generateTest() {
-        cashFlowGenerator.generateCashFlows(30);
-        return "redirect:/all";
     }
 
     @GetMapping(path="/all")

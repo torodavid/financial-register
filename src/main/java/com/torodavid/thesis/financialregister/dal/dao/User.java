@@ -11,6 +11,8 @@ public class User {
     @Column(length = 40)
     private String id;
     private String username;
+    private String surname;
+    private String forename;
     private String password;
     @Transient
     private String passwordConfirm;
@@ -77,4 +79,19 @@ public class User {
         this.cashFlows = cashFlows;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getForename() {
+        return forename;
+    }
+
+    public void setForename(String forename) {
+        this.forename = forename;
+    }
 }

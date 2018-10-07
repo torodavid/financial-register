@@ -6,22 +6,21 @@
     <div class="row">
         <dl class="Absolute-Center is-Responsive">
             <h1 class="text-center" th:text="#{createOrUpdateCashFlow.header}"></h1>
-            <div th:if="${redirected}"><h2 th:text="#{createOrUpdateCashFlow.header.noResult}"></h2></div>
             <form th:object="${cashFlow}" class="form-horizontal" id="add-cash-flow-form" method="post">
                 <dl class="row">
                     <input type="hidden" th:value="${cashFlow.id}" name="id"/>
                     <input
-                            th:replace="~{fragments/inputField :: input ('Name', 'name', 'text', false)}"/>
+                            th:replace="~{fragments/inputField :: input (#{createOrUpdateCashFlow.form.name}, 'name', 'text', false, '', 20)}"/>
                     <input
-                            th:replace="~{fragments/inputField :: input ('Description', 'description', 'text', false)}"/>
+                            th:replace="~{fragments/inputField :: input (#{createOrUpdateCashFlow.form.description}, 'description', 'text', false, '', 300)}"/>
                     <input
-                            th:replace="~{fragments/inputField :: input ('Amount', 'amount', 'text', false)}"/>
+                            th:replace="~{fragments/inputField :: input (#{createOrUpdateCashFlow.form.amount}, 'amount', 'text', false, 'Ft', 10)}"/>
                     <input
-                            th:replace="~{fragments/selectField :: select ('Category', 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()})}"/>
+                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.category}, 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()})}"/>
                     <input
-                            th:replace="~{fragments/selectField :: select ('Flow Direction', 'flowDirection', ${T(com.torodavid.thesis.financialregister.dal.enums.FlowDirection).values()})}"/>
+                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.flowDirection}, 'flowDirection', ${T(com.torodavid.thesis.financialregister.dal.enums.FlowDirection).values()})}"/>
                     <input
-                            th:replace="~{fragments/selectField :: select ('Priority', 'priority', ${T(com.torodavid.thesis.financialregister.dal.enums.Priority).values()})}"/>
+                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.priority}, 'priority', ${T(com.torodavid.thesis.financialregister.dal.enums.Priority).values()})}"/>
                 </dl>
                 <div class="form-group">
                     <button class="btn btn-def btn-block" type="submit"

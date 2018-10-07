@@ -13,7 +13,7 @@ public class StatisticsService {
     @Autowired
     CashFlowService cashFlowService;
 
-    public StatisticsWrapper csudalatosStatisztikaiKisnyulakParameterekbol(List<Long> ids) {
+    public StatisticsWrapper csudalatosStatisztikaiKisnyulakParameterekbol(List<String> ids) {
         Iterable<CashFlow> allCashFlowsByIds = cashFlowService.findAllCashFlowsByIds(ids);
 
 

@@ -9,7 +9,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findByUsername(String username);
     @Modifying
-    @Query("UPDATE User U set U.email = ?2, U.password = ?3 where U.id = ?1")
-    void setUserById(String id, String email, String password);
+    @Query("UPDATE User U set U.email = ?2, U.password = ?3, U.surname = ?4, U.forename = ?5 where U.id = ?1")
+    void setUserById(String id, String email, String password, String surname, String forename);
 
 }

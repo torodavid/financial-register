@@ -3961,6 +3961,7 @@ input[type="button"].btn-block {
 }
 
 .navbar {
+  margin-bottom: 50px;
   position: relative;
   display: -ms-flexbox;
   display: flex;
@@ -9041,6 +9042,17 @@ a.text-dark:hover, a.text-dark:focus {
   min-width: 200px;
   max-width: 480px;
   padding: 40px;
+}
+
+.table td.text {
+  max-width: 200px;
+}
+.table td.text span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
 }
 
 /*# sourceMappingURL=bootstrap.css.map */

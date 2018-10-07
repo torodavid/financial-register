@@ -22,9 +22,9 @@
     </thead>
     <tbody>
     <tr th:each="cashFlow, iStat : ${cashFlowPage.content}" th:title="${title}">
-        <td th:text="${cashFlow.name}">Kisnyul</td>
-        <td th:text="${cashFlow.description}">Bazinagy kisnyul</td>
-        <td th:text="${cashFlow.amount}">sok Bazinagy kisnyul</td>
+        <td class="text"><span>[[ ${cashFlow.name} ]]</span> </td>
+        <td class="text"><span>[[ ${cashFlow.description} ]]</span> </td>
+        <td> <div class="panel-footer text-center">[[ ${cashFlow.amount} ]] <span> Ft</span> </div></td>
         <td th:text="${cashFlow.category.name}">Szorakozas</td>
         <td th:text="${cashFlow.priority.name}">FONTOS NYUL</td>
         <td th:text="${cashFlow.flowDirection.name}">Kiadas</td>

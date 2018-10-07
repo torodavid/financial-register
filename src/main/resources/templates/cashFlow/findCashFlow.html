@@ -6,23 +6,27 @@
 <div class="container">
     <div class="row">
         <div class="Absolute-Center is-Responsive">
-
             <h1 class="text-center" th:text="#{findCashFlows.header}">Find cash-flow</h1>
 
             <form th:object="${cashFlow}" th:action="@{/cashFlow}" method="get"
                   class="form-horizontal" id="search-owner-form">
-
                 <dl class="row">
                     <dt class="col-sm-5"><label th:text="#{findCashFlow.form.name}">Name</label></dt>
                     <dd class="col-sm-7">
-                        <input class="form-control" th:field="*{name}" size="30"
-                               maxlength="80"/>
+                        <input class="form-control" th:field="*{name}"
+                               maxlength="20"/>
                     </dd>
                 </dl>
                 <button type="submit" class="btn btn-def btn-block" th:text="#{findCashFlow.submit}">Find
                     cash-flow
                 </button>
             </form>
+            <div th:if="${redirected}" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                <span th:text="#{findCashFlows.header.noResult}"></span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>

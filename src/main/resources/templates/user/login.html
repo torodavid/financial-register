@@ -13,12 +13,12 @@
 
                     <dl class="row">
                         <dt class="col-sm-6"><label th:text="#{label.user.username}">first</label></dt>
-                        <dd class="col-sm-6"><input th:field="*{username}"/>
+                        <dd class="col-sm-6"><input class="form-control" th:field="*{username}"/>
                             <p th:each="error: ${#fields.errors('username')}" th:text="${error}">Validation error</p>
                         </dd>
 
                         <dt class="col-sm-6"><label th:text="#{label.user.password}">password</label></dt>
-                        <dd class="col-sm-6"><input type="password" th:field="*{password}"/>
+                        <dd class="col-sm-6"><input class="form-control" type="password" th:field="*{password}"/>
                             <p th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
                         </dd>
                     </dl>

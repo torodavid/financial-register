@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 public class CashFlow {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    @Column(length = 40)
+    private String id;
     @NotNull
     @NotEmpty
     @Size(min=3, max=20)
@@ -40,7 +40,8 @@ public class CashFlow {
     public CashFlow() {
     }
 
-    public CashFlow(String name, String description, int amount, LocalDateTime creationDate, LocalDateTime modificationDate, Priority priority, Category category, FlowDirection flowDirection, User user) {
+    public CashFlow(String id, String name, String description, int amount, LocalDateTime creationDate, LocalDateTime modificationDate, Priority priority, Category category, FlowDirection flowDirection, User user) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.amount = amount;
@@ -52,11 +53,11 @@ public class CashFlow {
         this.user = user;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
