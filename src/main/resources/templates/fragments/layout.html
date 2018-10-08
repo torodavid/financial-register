@@ -31,7 +31,10 @@
                 </a>
             </li>
 
-            <li th:replace="::menuItem ('/','home','Home page','home','Home')">
+            <li th:replace="::menuItem ('/','home','Home page','home',#{label.navbar.home})">
+            </li>
+
+            <li th:replace="::menuItem ('/about','about','Az oldalról','about',#{label.about.header})">
             </li>
 
             <li sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown">
@@ -52,9 +55,9 @@
                 sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
             <li th:replace="::menuItem ('/users/login','login','Bejelentkező oldal','login',#{layout.navbar.menuItem.login})"
                 sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
-            <li th:replace="::menuItem ('/users/logout','logout','Kijelentkezls oldala','logout',#{layout.navbar.menuItem.logout})"
-                sec:authorize="isAuthenticated()"></li>
             <li th:replace="::menuItem ('/users/profile/' + ${#authentication.getPrincipal().getUsername()},'profile','Profile','profile',#{layout.navbar.menuItem.profile})"
+                sec:authorize="isAuthenticated()"></li>
+            <li th:replace="::menuItem ('/users/logout','logout','Kijelentkezls oldala','logout',#{layout.navbar.menuItem.logout})"
                 sec:authorize="isAuthenticated()"></li>
         </ul>
     </div>

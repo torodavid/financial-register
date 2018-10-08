@@ -1,10 +1,10 @@
 <html>
 <body>
 <form>
-    <th:block th:fragment="select (label, name, items)">
+    <th:block th:fragment="select (label, name, items, readonly)">
         <dt class="col-sm-6 text-truncate"><label class="col-sm-2 control-label" th:text="${label}">Label</label></dt>
         <dd class="col-sm-6">
-            <select th:field="*{__${name}__}" class="form-control">
+            <select th:field="*{__${name}__}" class="form-control" th:readonly="${readonly}">
                 <option th:each="item : ${items}" th:value="${item}"
                         th:text="${item.name}">kisnyul
                 </option>

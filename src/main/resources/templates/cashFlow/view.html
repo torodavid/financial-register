@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'cashFlow')}">
+
+<body>
+<div class="container">
+    <div class="row">
+        <dl class="Absolute-Center is-Responsive">
+            <h1 class="text-center" th:text="#{createOrUpdateCashFlow.header}"></h1>
+            <form th:object="${cashFlow}" class="form-horizontal" id="add-cash-flow-form" method="post">
+                <dl class="row">
+                    <input type="hidden" th:value="${cashFlow.id}" name="id"/>
+                    <input
+                            th:replace="~{fragments/inputField :: input (#{createOrUpdateCashFlow.form.name}, 'name', 'text', true, '', 20)}"/>
+                    <input
+                            th:replace="~{fragments/inputField :: input (#{createOrUpdateCashFlow.form.description}, 'description', 'text', true, '', 300)}"/>
+                    <input
+                            th:replace="~{fragments/inputField :: input (#{createOrUpdateCashFlow.form.amount}, 'amount', 'text', true, 'Ft', 10)}"/>
+                    <input
+                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.category}, 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()}, true)}"/>
+                    <input
+                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.flowDirection}, 'flowDirection', ${T(com.torodavid.thesis.financialregister.dal.enums.FlowDirection).values()}, true)}"/>
+                    <input
+                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.priority}, 'priority', ${T(com.torodavid.thesis.financialregister.dal.enums.Priority).values()}, true)}"/>
+                    <dt class="col-sm-6 text-truncate"><label class="col-sm-2 control-label" >Létrehozva</label></dt>
+                    <dd class="col-sm-6"><span>[[ ${#temporals.format(cashFlow.creationDate, 'yyyy-MM-dd HH:mm')} ]]</span>
+                    </dd>
+
+                    <dt class="col-sm-6 text-truncate"><label class="col-sm-2 control-label" >Módosítva</label></dt>
+                    <dd class="col-sm-6"><span>[[ ${#temporals.format(cashFlow.modificationDate, 'yyyy-MM-dd HH:mm')} ]]</span>
+                    </dd>
+                </dl>
+                <a th:href="@{/cashFlow/modify/__${cashFlow.id}__}">Módosítás</a>
+            </form>
+    </div>
+</div>
+</div>
+</body>
+</html>

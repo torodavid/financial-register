@@ -2,8 +2,8 @@ package com.torodavid.thesis.financialregister.dal.enums;
 
 public enum Priority {
     ONE ("Egy"),
-    TWO ("Ketto"),
-    THREE ("Harom");
+    TWO ("Kettő"),
+    THREE ("Három");
 
     private final String name;
 

@@ -43,6 +43,9 @@ public class UserController {
             userService.register(accountDto);
             return new ModelAndView("success");
         }
+        if (!accountDto.getPassword().equals(accountDto.getMatchingPassword())) {
+            result.rejectValue("matchingPassword", "error.matchingPassword", "Nem egyezik a két jelszó!");
+        }
         return showRegistrationForm(model, accountDto);
     }
 

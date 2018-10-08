@@ -55,10 +55,17 @@ public class CashFlowController {
         return initCreationForm(cashFlow, model);
     }
 
+    @GetMapping("/view/{cashFlowId}")
+    public String viewCashFlow(Map<String, Object> model, @PathVariable("cashFlowId") String id) {
+        CashFlow cashFlow = cashFlowService.getCashFlowById(id).get();
+        model.put("cashFlow", cashFlow);
+        return "cashFlow/view";
+    }
+
     @GetMapping("/modify/{cashFlowId}")
     public String modifyCashFlow(Map<String, Object> model, @PathVariable("cashFlowId") String id) {
-        CashFlow kisnyul = cashFlowService.getCashFlowById(id).get();
-        model.put("cashFlow", kisnyul);
+        CashFlow cashFlow = cashFlowService.getCashFlowById(id).get();
+        model.put("cashFlow", cashFlow);
         return CASH_FLOW_CREATE_OR_UPDATE;
     }
 

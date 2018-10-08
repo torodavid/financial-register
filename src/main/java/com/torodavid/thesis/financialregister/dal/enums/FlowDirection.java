@@ -1,8 +1,8 @@
 package com.torodavid.thesis.financialregister.dal.enums;
 
 public enum FlowDirection {
-    IN ("Bevetel"),
-    OUT ("Kiadas");
+    IN ("Bevétel"),
+    OUT ("Kiadás");
 
     private final String name;
 

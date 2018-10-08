@@ -16,11 +16,11 @@
                     <input
                             th:replace="~{fragments/inputField :: input (#{createOrUpdateCashFlow.form.amount}, 'amount', 'text', false, 'Ft', 10)}"/>
                     <input
-                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.category}, 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()})}"/>
+                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.category}, 'category', ${T(com.torodavid.thesis.financialregister.dal.enums.Category).values()}, false)}"/>
                     <input
-                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.flowDirection}, 'flowDirection', ${T(com.torodavid.thesis.financialregister.dal.enums.FlowDirection).values()})}"/>
+                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.flowDirection}, 'flowDirection', ${T(com.torodavid.thesis.financialregister.dal.enums.FlowDirection).values()}, false)}"/>
                     <input
-                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.priority}, 'priority', ${T(com.torodavid.thesis.financialregister.dal.enums.Priority).values()})}"/>
+                            th:replace="~{fragments/selectField :: select (#{createOrUpdateCashFlow.form.priority}, 'priority', ${T(com.torodavid.thesis.financialregister.dal.enums.Priority).values()}, false)}"/>
                 </dl>
                 <div class="form-group">
                     <button class="btn btn-def btn-block" type="submit"

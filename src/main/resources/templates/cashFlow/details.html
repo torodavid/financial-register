@@ -6,34 +6,40 @@
 <body>
 
 <h1 class="text-center" th:text="#{cashFlow.details.header}">Cash-flows</h1>
-
-<table class="table table-striped" th:object="${cashFlowPage}">
-    <thead class="table-primary">
-    <tr>
-        <th th:text="#{cashFlow.details.table.name}">NAME</th>
-        <th th:text="#{cashFlow.details.table.description}">DESCRIPTION</th>
-        <th th:text="#{cashFlow.details.table.amount}">AMOUNT</th>
-        <th th:text="#{cashFlow.details.table.category}">CATEGORY</th>
-        <th th:text="#{cashFlow.details.table.priority}">PRIORITY</th>
-        <th th:text="#{cashFlow.details.table.direction}">FLOW DIRECTION</th>
-        <th th:text="#{cashFlow.details.table.modify}" sec:authorize="!hasRole('ROLE_ADMIN')">Modisitas</th>
-        <th th:text="#{cashFlow.details.table.delete}" sec:authorize="!hasRole('ROLE_ADMIN')">Torles</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="cashFlow, iStat : ${cashFlowPage.content}" th:title="${title}">
-        <td class="text"><span>[[ ${cashFlow.name} ]]</span> </td>
-        <td class="text"><span>[[ ${cashFlow.description} ]]</span> </td>
-        <td> <div class="panel-footer text-center">[[ ${cashFlow.amount} ]] <span> Ft</span> </div></td>
-        <td th:text="${cashFlow.category.name}">Szorakozas</td>
-        <td th:text="${cashFlow.priority.name}">FONTOS NYUL</td>
-        <td th:text="${cashFlow.flowDirection.name}">Kiadas</td>
-        <td sec:authorize="!hasRole('ROLE_ADMIN')"><a th:href="@{modify/__${cashFlow.id}__}">Modify</a></td>
-        <td sec:authorize="!hasRole('ROLE_ADMIN')"><a th:href="@{delete/__${cashFlow.id}__}">Delete</a></td>
-    </tr>
-    </tbody>
-</table>
-
+<div class="container-fluid">
+    <table class="table table-striped" th:object="${cashFlowPage}">
+        <thead class="table-primary">
+        <tr>
+            <th th:text="#{cashFlow.details.table.name}">NAME</th>
+            <th th:text="#{cashFlow.details.table.description}">DESCRIPTION</th>
+            <th th:text="#{cashFlow.details.table.amount}">AMOUNT</th>
+            <th th:text="#{cashFlow.details.table.category}">CATEGORY</th>
+            <th th:text="#{cashFlow.details.table.priority}">PRIORITY</th>
+            <th th:text="#{cashFlow.details.table.direction}">FLOW DIRECTION</th>
+            <th th:text="#{cashFlow.details.table.modificationDate}">last modification</th>
+            <th th:text="#{cashFlow.details.table.view}">view</th>
+            <th th:text="#{cashFlow.details.table.modify}" sec:authorize="!hasRole('ROLE_ADMIN')">Modisitas</th>
+            <th th:text="#{cashFlow.details.table.delete}" sec:authorize="!hasRole('ROLE_ADMIN')">Torles</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cashFlow, iStat : ${cashFlowPage.content}" th:title="${title}">
+            <td class="text"><span>[[ ${cashFlow.name} ]]</span></td>
+            <td class="text"><span>[[ ${cashFlow.description} ]]</span></td>
+            <td>
+                <div class="panel-footer text-center">[[ ${cashFlow.amount} ]] <span> Ft</span></div>
+            </td>
+            <td th:text="${cashFlow.category.name}">Szorakozas</td>
+            <td th:text="${cashFlow.priority.name}">FONTOS NYUL</td>
+            <td th:text="${cashFlow.flowDirection.name}">Kiadas</td>
+            <td class="text"><span>[[ ${#temporals.format(cashFlow.modificationDate, 'yyyy-MM-dd HH:mm')} ]]</span></td>
+            <td><a th:href="@{view/__${cashFlow.id}__}">Megtekint</a></td>
+            <td sec:authorize="!hasRole('ROLE_ADMIN')"><a th:href="@{modify/__${cashFlow.id}__}">Modify</a></td>
+            <td sec:authorize="!hasRole('ROLE_ADMIN')"><a th:href="@{delete/__${cashFlow.id}__}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-5">
