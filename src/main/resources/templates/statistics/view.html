@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'statistics')}">
+
+<body>
+
+
+<h1 class="text-center" th:text="#{statistics.view.header}">Statistics page</h1>
+<dl class="row">
+    <dt class="col-sm-6">
+        <canvas id="egyik" width="40" height="40"></canvas>
+    </dt>
+    <dd class="col-sm-6">
+        <canvas id="masik" width="40" height="40"></canvas>
+    </dd>
+</dl>
+</body>
+</html>

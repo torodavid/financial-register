@@ -55,6 +55,8 @@
                 sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
             <li th:replace="::menuItem ('/users/login','login','Bejelentkező oldal','login',#{layout.navbar.menuItem.login})"
                 sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
+            <li th:replace="::menuItem ('/statistics/view','login','Statisztika','statistics',#{layout.navbar.menuItem.statistics})"
+                sec:authorize="hasRole('ROLE_USER')"></li>
             <li th:replace="::menuItem ('/users/profile/' + ${#authentication.getPrincipal().getUsername()},'profile','Profile','profile',#{layout.navbar.menuItem.profile})"
                 sec:authorize="isAuthenticated()"></li>
             <li th:replace="::menuItem ('/users/logout','logout','Kijelentkezls oldala','logout',#{layout.navbar.menuItem.logout})"
@@ -78,7 +80,66 @@
 </div>
 <script th:src="@{/resources/jquery/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/resources/js/bootstrap.min.js}"></script>
+<script th:src="@{/resources/js/Chart.js}"></script>
+<script>
+    var ctx = document.getElementById("egyik").getContext('2d');
+    var ctx2 = document.getElementById("masik").getContext('2d');
+    var chart1 = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Jan", "Febr", "Árpl", "Május", "NYEH"],
+            datasets: [{
+                label: 'Hónapos',
+                data: [9, 5, 5, 3, 6],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    var chart2 = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: ["Kisnyul1", "Kisnyul2", "Kisnyul3", "Kisnyul4", "Kisnyul5", "Kisnyul6", "Kisnyul7", "Kisnyul8"],
+            datasets: [{
+                label: 'Nyulas',
+                fill: false,
+                borderDash: [5, 5],
+                data: [6, 3, 2, 5, 9, 3 ,5, 6],
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
 
+</script>
 
 </body>
 

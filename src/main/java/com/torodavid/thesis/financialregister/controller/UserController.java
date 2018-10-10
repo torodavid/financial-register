@@ -39,12 +39,12 @@ public class UserController {
 
     @PostMapping("/registration")
     public ModelAndView registerUserAccount(@Valid UserDto accountDto, BindingResult result, Model model) {
+        if (!accountDto.getPassword().equals(accountDto.getMatchingPassword())) {
+            result.rejectValue("matchingPassword", "error.matchingPassword", "Nem egyezik a két jelszó!");
+        }
         if (!result.hasErrors()) {
             userService.register(accountDto);
             return new ModelAndView("success");
-        }
-        if (!accountDto.getPassword().equals(accountDto.getMatchingPassword())) {
-            result.rejectValue("matchingPassword", "error.matchingPassword", "Nem egyezik a két jelszó!");
         }
         return showRegistrationForm(model, accountDto);
     }
@@ -68,8 +68,8 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) || userDetails.getUsername().equals(username)) {
 
-            UserDto userDto2 = userService.getUserDtoByUsername(username);
-            model.addAttribute("userDto", userDto2);
+            userDto = userService.getUserDtoByUsername(username);
+            model.addAttribute("userDto", userDto);
 
             modelAndView.setViewName("user/profile");
         } else {
@@ -80,6 +80,9 @@ public class UserController {
 
     @PostMapping("/profile/{username}")
     public ModelAndView processModifyUserForm(@Valid UserDto userDto, BindingResult result, Model model) {
+        if (!userDto.getPassword().equals(userDto.getMatchingPassword())) {
+            result.rejectValue("matchingPassword", "error.matchingPassword", "Nem egyezik a két jelszó!");
+        }
         if (!result.hasErrors()) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) || userDetails.getUsername().equals(userDto.getUsername())) {

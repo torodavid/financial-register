@@ -134,8 +134,8 @@ public class CashFlowService {
         while (!hasRole && roleIterator.hasNext())
             hasRole = roleIterator.next().getName().equals("ROLE_ADMIN");
         if (hasRole)
-            return cashFlowRepository.findByName(name);
-        return cashFlowRepository.findByName(name, getCurrentUser());
+            return cashFlowRepository.findTop1ByName(name);
+        return cashFlowRepository.findTop1ByNameAndUser(name, getCurrentUser());
     }
 
     public Iterable<CashFlow> getAllCashFlowsByCategory(Category category) {

@@ -14,22 +14,31 @@
                         <input class="form-control" type="text" th:field="*{__${name}__}"
                                th:readonly="${readonly}" th:maxlength="${length}"/>
                     </div>
-                    <input th:if="${#strings.length(inputGroupText) == 0}" class="form-control" type="text" th:field="*{__${name}__}"
+                    <input th:if="${#strings.length(inputGroupText) == 0}" class="form-control" type="text"
+                           th:field="*{__${name}__}" th:classappend="${#fields.hasErrors(name)} ?  'is-invalid' : '' "
                            th:readonly="${readonly}" th:maxlength="${length}"/>
-                </div>
+                    <div th:classappend="${#fields.hasErrors(name)} ?  'invalid-feedback' : '' "
+                         th:each="error: ${#fields.errors(name)}"
+                         th:text="${error}">Validation error
+                    </div>
 
+                </div>
 
                 <input th:case="'date'" class="form-control" type="text" th:field="*{__${name}__}"
                        placeholder="YYYY-MM-DD" title="Enter a date in this format: YYYY-MM-DD"
                        pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>
                 <input th:case="'email'" class="form-control" type="email" th:field="*{__${name}__}"/>
-                <input th:case="'password'" class="form-control" type="password" th:field="*{__${name}__}"/>
-            </div>
-            <div class="invalid-feedback">
-                <p th:each="error: ${#fields.errors(name)}"
-                   th:text="${error}">Validation error</p>
-            </div>
+                <!--<input th:case="'password'" class="form-control" type="password" th:field="*{__${name}__}"/>-->
 
+                <input th:case="'password'" th:maxlength="10" class="form-control" type="password"
+                       th:classappend="${#fields.hasErrors(name)} ?  'is-invalid' : '' "
+                       th:field="*{__${name}__}"/>
+                <div th:classappend="${#fields.hasErrors(name)} ?  'invalid-feedback' : '' "
+                     th:each="error : ${#fields.errors(name)}"
+                     th:text="${error}">Validation error
+                </div>
+
+            </div>
         </dd>
     </th:block>
 </form>
