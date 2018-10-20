@@ -2,16 +2,24 @@
       th:replace="~{fragments/layout :: layout (~{::body},'statistics')}">
 
 <body>
+<dl class="row">
 
+    <dt class="col-sm-4">
+        <input type="date" id="startDate" class="form-control">
+    </dt>
+    <dt class="col-sm-4">
+        <input type="date" id="endDate" class="form-control">
+    </dt>
+    <dt class="col-sm-4">
+        <button id="statByDate" name="but1">Lekérdez</button>
+    </dt>
+</dl>
 
 <h1 class="text-center" th:text="#{statistics.view.header}">Statistics page</h1>
 <dl class="row">
-    <dt class="col-sm-6">
-        <canvas id="egyik" width="40" height="40"></canvas>
+    <dt class="col-sm-12" id="cv">
+        <canvas id="egyik" height="50" width="50"></canvas>
     </dt>
-    <dd class="col-sm-6">
-        <canvas id="masik" width="40" height="40"></canvas>
-    </dd>
 </dl>
 </body>
 </html>

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -36,6 +37,8 @@ public interface CashFlowRepository extends CrudRepository<CashFlow, String> {
 
     @Query("select cashFlow from CashFlow cashFlow where cashFlow.name = ?1 and user_id = ?2")
     Optional<CashFlow> findByName(String name, User user);
+
+    Iterable<CashFlow> findAllByModificationDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 
     @Modifying
     @Query("UPDATE CashFlow CF set CF.name = ?1, CF.description = ?2, CF.amount = ?3, CF.category = ?4, CF.flowDirection = ?5, CF.priority = ?6, CF.modificationDate = ?8 where CF.id = ?7")

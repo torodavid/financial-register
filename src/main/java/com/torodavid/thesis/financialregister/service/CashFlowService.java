@@ -19,8 +19,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -57,7 +55,7 @@ public class CashFlowService {
 
         for (int i = 1; i < 36; i++) {
             String name1 = "Fizetés " + i;
-            cashFlowRepository.save(new CashFlow(UUID.randomUUID().toString(), name1, "Fizetés leírása " + i, new Random().nextInt((250000 - 200000) + 1) + 200000, LocalDateTime.now().minusMonths(i), LocalDateTime.now(), Priority.ONE, Category.SALARY, FlowDirection.IN, user));
+            cashFlowRepository.save(new CashFlow(UUID.randomUUID().toString(), name1, "Fizetés leírása " + i, new Random().nextInt((250000 - 200000) + 1) + 200000, LocalDateTime.now().minusMonths(i), LocalDateTime.now().minusMonths(i), Priority.ONE, Category.SALARY, FlowDirection.IN, user));
             long limit = new Random().nextInt((50 - 30) + 30);
             for (int j = new Integer(1); limit-- > 0; j++) {
                 String name = "Minta pénzmozgás" + i + "." + j;
@@ -66,8 +64,8 @@ public class CashFlowService {
                         name,
                         "Minta pénzmozgás leírása" + i + "." + j,
                         new Random().nextInt((15000 - 5000) + 1) + 5000,
-                        LocalDateTime.now().minusMonths(i),
-                        LocalDateTime.now(),
+                        LocalDateTime.now().minusMonths(i).minusDays(j),
+                        LocalDateTime.now().minusMonths(i).minusDays(j),
                         priorities[new Random().nextInt(priorities.length)],
                         categories.get(new Random().nextInt(categories.size())),
                         FlowDirection.OUT,
@@ -114,6 +112,10 @@ public class CashFlowService {
 
     public Iterable<CashFlow> getAllCashFlows() {
         return cashFlowRepository.findAll();
+    }
+
+    public Iterable<CashFlow> findAllByModificationDateBetween(LocalDateTime startDate, LocalDateTime endDate) {
+        return cashFlowRepository.findAllByModificationDateBetween(startDate, endDate);
     }
 
     public Iterable<CashFlow> findAllCashFlowsByName(String name) {
