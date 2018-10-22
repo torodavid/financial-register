@@ -18,6 +18,7 @@ public interface UserService {
     UserDto getUserDtoByUsername(String username);
     void deleteById(String id);
     Page<UserDto> findPaginated(PageRequest pageable, Optional<List<String>> ids);
+    User getCurrentUser();
 
 
 }

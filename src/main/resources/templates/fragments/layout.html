@@ -8,13 +8,13 @@
     <meta charset="utf-8">
 
     <link rel="stylesheet" th:href="@{/resources/css/bootstrap.css}"/>
-    <title>Pls</title>
+    <title>Financial Register</title>
 
 </head>
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-    <img th:src="@{/resources/images/nc.png}" width="30" height="40" class="d-inline-block align-top" alt="">
+    <img th:src="@{/resources/images/chart2.png}" width="30" height="40" class="d-inline-block align-top" alt="">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -55,7 +55,7 @@
                 sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
             <li th:replace="::menuItem ('/users/login','login','Bejelentkező oldal','login',#{layout.navbar.menuItem.login})"
                 sec:authorize="hasRole('ROLE_ANONYMOUS')"></li>
-            <li th:replace="::menuItem ('/statistics/view','login','Statisztika','statistics',#{layout.navbar.menuItem.statistics})"
+            <li th:replace="::menuItem ('/statistics/view','statistics','Statisztika','statistics',#{layout.navbar.menuItem.statistics})"
                 sec:authorize="hasRole('ROLE_USER')"></li>
             <li th:replace="::menuItem ('/users/profile/' + ${#authentication.getPrincipal().getUsername()},'profile','Profile','profile',#{layout.navbar.menuItem.profile})"
                 sec:authorize="isAuthenticated()"></li>
@@ -83,8 +83,13 @@
 <script th:src="@{/resources/js/bootstrap.min.js}"></script>
 <script th:src="@{/resources/js/Chart.js}"></script>
 <script>
+    $('select[name=priority]').attr('disabled', !$('input[name=prioritized]').is(':checked'));
+    $('input[name=prioritized]').change(function () {
+        $('select[name=priority]').attr('disabled', !$('input[name=prioritized]').is(':checked'));
+    });
 
     $("#statByDate").click(function (e) {
+        console.log($('input[name=priority]:checked').val())
         e.preventDefault();
         $("canvas#egyik").remove();
         $("#cv").append('<canvas id="egyik" class="animated fadeIn"></canvas>');
@@ -97,21 +102,25 @@
             data: JSON.stringify({
                 "startDate": $("#startDate").val().toString(),
                 "endDate": $("#endDate").val().toString(),
+                "priority": $('input[name=priority]:checked').val(),
+                "flowDirection": $('input[name=flowDirection]:checked').val(),
+                "category": $('select[name=category]').val(),
+                "prioritized": $('input[name=prioritized]').is(':checked'),
             }),
 
             success: function (result) {
                 new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: Object.keys(result),
+                        labels: Object.keys(result.chartData),
                         datasets: [{
                             label: 'Pénzmozgás',
-                            data: Object.values(result),
+                            data: Object.values(result.chartData),
                             backgroundColor: [
-                                'rgba(54, 162, 235, 0.2)'
+                                result.bgColor
                             ],
                             borderColor: [
-                                'rgba(255,99,132,1)'
+                                result.borderColor
                             ],
                             borderWidth: 1
                         }]

@@ -2,18 +2,59 @@
       th:replace="~{fragments/layout :: layout (~{::body},'statistics')}">
 
 <body>
-<dl class="row">
+<dl class="row bgC">
+    <dt class="col-sm-3"><label class="normal-weight">Kezdő dátum</label></dt>
+    <dd class="col-sm-3"><input type="date" id="startDate" class="form-control"></dd>
 
-    <dt class="col-sm-4">
-        <input type="date" id="startDate" class="form-control">
+
+    <dt class="col-sm-4"><label class="normal-weight">Vegye figyelembe a prioritást</label><input type="checkbox"
+                                                                                                  name="prioritized">
     </dt>
-    <dt class="col-sm-4">
-        <input type="date" id="endDate" class="form-control">
+    <dd class="col-sm-2">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="normal-weight">Prioritás</label>
+            </div>
+            <select class="custom-select" name="priority">
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+            </select>
+        </div>
+    </dd>
+    <dt class="col-sm-3"><label class="normal-weight">Vége dátum</label></dt>
+    <dd class="col-sm-3"><input type="date" id="endDate" class="form-control"></dd>
+
+    <dt class="col-sm-4"><label class="normal-weight">Irány figyelembevétele</label><input type="checkbox"
+                                                                                           name="directionConsidered">
     </dt>
-    <dt class="col-sm-4">
-        <button id="statByDate" name="but1">Lekérdez</button>
+    <dd class="col-sm-2"><input type="radio" name="flowDirection" value="0" checked> <label class="normal-weight">Bevétel</label>
+        <input type="radio" name="flowDirection" value="1"> <label class="normal-weight">Kiadás</label>
+    </dd>
+
+
+    <dt class="col-sm-3"><label class="normal-weight">Kategória </label></dt>
+    <dd class="col-sm-3">
+        <div class="form-group">
+            <select name="category" class="form-control">
+                <option value="0" selected>Nincs besorolva</option>
+                <option value="1">Számla</option>
+                <option value="2">Fizetés</option>
+                <option value="3">Szórakozás</option>
+                <option value="4">Tech</option>
+            </select>
+        </div>
+    </dd>
+
+    <dt class="col-sm-4"><br>
     </dt>
+    <dd class="col-sm-2">
+        <div class="float-right">
+            <button id="statByDate" class="btn btn-def btn-block">Lekérdez</button>
+        </div>
+    </dd>
 </dl>
+
 
 <h1 class="text-center" th:text="#{statistics.view.header}">Statistics page</h1>
 <dl class="row">

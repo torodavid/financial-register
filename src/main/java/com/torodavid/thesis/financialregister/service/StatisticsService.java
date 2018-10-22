@@ -19,16 +19,29 @@ public class StatisticsService {
     @Autowired
     CashFlowService cashFlowService;
 
-    public Map<LocalDate, Integer> getStatistics(LocalDateTime startDate, LocalDateTime endDate) {
+    @Autowired
+    private UserService userService;
+
+    public StatisticsWrapper getStatistics(StatisticsWrapper request) {
+        TreeMap<LocalDate, Integer> chartData = new TreeMap<>((o1, o2) -> Long.compare(o1.toEpochDay(), o2.toEpochDay()));;
         int sum = 0;
-        TreeMap<LocalDate, Integer> ret = new TreeMap<>((o1, o2) -> Long.compare(o1.toEpochDay(), o2.toEpochDay()));
-        Iterable<CashFlow> cashFlows = cashFlowService.findAllByModificationDateBetween(startDate, endDate);
+        Iterable<CashFlow> cashFlows;
+        if (request.getPrioritized()) {
+            cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenPrioritized(userService.getCurrentUser(), request.getPriority(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+        } else {
+            cashFlows = cashFlowService.findAllByUserAndModificationDateBetween(userService.getCurrentUser(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+        }
         for (CashFlow cashFlow : cashFlows) {
             sum += cashFlow.getFlowDirection() == FlowDirection.IN ? cashFlow.getAmount() : -1*cashFlow.getAmount();
-            ret.put(cashFlow.getModificationDate().toLocalDate(), sum);
+            chartData.put(cashFlow.getModificationDate().toLocalDate(), sum);
         }
-
-        return ret;
+        StatisticsWrapper statisticsWrapper = new StatisticsWrapper();
+        statisticsWrapper.setStartDate(request.getStartDate());
+        statisticsWrapper.setEndDate(request.getEndDate());
+        statisticsWrapper.setChartData(chartData);
+        statisticsWrapper.setBorderColor("rgba(255,99,132,1)");
+        statisticsWrapper.setBgColor("rgba(54, 162, 235, 0.2)");
+        return statisticsWrapper;
     }
 
 }
