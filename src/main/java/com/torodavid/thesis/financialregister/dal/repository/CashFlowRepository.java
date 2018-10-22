@@ -42,6 +42,10 @@ public interface CashFlowRepository extends CrudRepository<CashFlow, String> {
 
     Iterable<CashFlow> findAllByUserAndPriorityAndModificationDateBetweenOrderByModificationDate(User user, Priority priority, LocalDateTime startDate, LocalDateTime endDate);
 
+    Iterable<CashFlow> findAllByUserAndFlowDirectionAndModificationDateBetweenOrderByModificationDate(User user, FlowDirection flowDirection, LocalDateTime startDate, LocalDateTime endDate);
+
+    Iterable<CashFlow> findAllByUserAndPriorityAndFlowDirectionAndModificationDateBetweenOrderByModificationDate(User user, Priority priority, FlowDirection flowDirection, LocalDateTime startDate, LocalDateTime endDate);
+
     @Modifying
     @Query("UPDATE CashFlow CF set CF.name = ?1, CF.description = ?2, CF.amount = ?3, CF.category = ?4, CF.flowDirection = ?5, CF.priority = ?6, CF.modificationDate = ?8 where CF.id = ?7")
     void setCashFlowById(String name, String description, int amount, Category category, FlowDirection flowDirection, Priority priority, String cashFlowId, LocalDateTime date);

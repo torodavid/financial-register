@@ -88,8 +88,12 @@
         $('select[name=priority]').attr('disabled', !$('input[name=prioritized]').is(':checked'));
     });
 
+    $('input[name=flowDirection]').attr('disabled', !$('input[name=directionConsidered]').is(':checked'));
+    $('input[name=directionConsidered]').change(function () {
+        $('input[name=flowDirection]').attr('disabled', !$('input[name=directionConsidered]').is(':checked'));
+    });
+
     $("#statByDate").click(function (e) {
-        console.log($('input[name=priority]:checked').val())
         e.preventDefault();
         $("canvas#egyik").remove();
         $("#cv").append('<canvas id="egyik" class="animated fadeIn"></canvas>');
@@ -102,10 +106,11 @@
             data: JSON.stringify({
                 "startDate": $("#startDate").val().toString(),
                 "endDate": $("#endDate").val().toString(),
-                "priority": $('input[name=priority]:checked').val(),
+                "priority": $('select[name=priority]').val(),
                 "flowDirection": $('input[name=flowDirection]:checked').val(),
                 "category": $('select[name=category]').val(),
                 "prioritized": $('input[name=prioritized]').is(':checked'),
+                "directionConsidered": $('input[name=directionConsidered]').is(':checked'),
             }),
 
             success: function (result) {

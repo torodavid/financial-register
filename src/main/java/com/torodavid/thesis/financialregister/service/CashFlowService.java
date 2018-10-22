@@ -117,6 +117,14 @@ public class CashFlowService {
         return cashFlowRepository.findAllByUserAndPriorityAndModificationDateBetweenOrderByModificationDate(user, priority, startDate, endDate);
     }
 
+    public Iterable<CashFlow> findAllByUserAndModificationDateBetweenDirectionConsidered(User user, FlowDirection flowDirection, LocalDateTime startDate, LocalDateTime endDate) {
+        return cashFlowRepository.findAllByUserAndFlowDirectionAndModificationDateBetweenOrderByModificationDate(user, flowDirection, startDate, endDate);
+    }
+
+    public Iterable<CashFlow> findAllByUserAndModificationDateBetweenPrioritizedAndDirectionConsidered(User user, Priority priority, FlowDirection flowDirection, LocalDateTime startDate, LocalDateTime endDate) {
+        return cashFlowRepository.findAllByUserAndPriorityAndFlowDirectionAndModificationDateBetweenOrderByModificationDate(user, priority, flowDirection, startDate, endDate);
+    }
+
     public Iterable<CashFlow> findAllCashFlowsByName(String name) {
         User currentUser = userService.getCurrentUser();
         Boolean hasRole = false;
