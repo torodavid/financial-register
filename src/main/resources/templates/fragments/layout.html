@@ -93,6 +93,11 @@
         $('input[name=flowDirection]').attr('disabled', !$('input[name=directionConsidered]').is(':checked'));
     });
 
+    $('select[name=category]').attr('disabled', !$('input[name=categoryConsidered]').is(':checked'));
+    $('input[name=categoryConsidered]').change(function () {
+        $('select[name=category]').attr('disabled', !$('input[name=categoryConsidered]').is(':checked'));
+    });
+
     $("#statByDate").click(function (e) {
         e.preventDefault();
         $("canvas#egyik").remove();
@@ -111,6 +116,7 @@
                 "category": $('select[name=category]').val(),
                 "prioritized": $('input[name=prioritized]').is(':checked'),
                 "directionConsidered": $('input[name=directionConsidered]').is(':checked'),
+                "categoryConsidered": $('input[name=categoryConsidered]').is(':checked'),
             }),
 
             success: function (result) {

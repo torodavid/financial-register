@@ -11,5 +11,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Modifying
     @Query("UPDATE User U set U.email = ?2, U.password = ?3, U.surname = ?4, U.forename = ?5 where U.id = ?1")
     void setUserById(String id, String email, String password, String surname, String forename);
-
+    @Query("SELECT CASE WHEN COUNT(U) > 0 THEN 'true' ELSE 'false' END FROM User U WHERE U.username = ?1")
+    Boolean isUsernameExists(String username);
+    @Query("SELECT CASE WHEN COUNT(U) > 0 THEN 'true' ELSE 'false' END FROM User U WHERE U.email = ?1")
+    Boolean isEmailExists(String email);
 }

@@ -113,16 +113,32 @@ public class CashFlowService {
         return cashFlowRepository.findAllByUserAndModificationDateBetweenOrderByModificationDate(user, startDate, endDate);
     }
 
+    public Iterable<CashFlow> findAllByUserAndModificationDateBetweenCategorized(User user, Category category, LocalDateTime startDate, LocalDateTime endDate) {
+        return cashFlowRepository.findAllByUserAndCategoryAndModificationDateBetweenOrderByModificationDate(user, category, startDate, endDate);
+    }
+
     public Iterable<CashFlow> findAllByUserAndModificationDateBetweenPrioritized(User user, Priority priority, LocalDateTime startDate, LocalDateTime endDate) {
         return cashFlowRepository.findAllByUserAndPriorityAndModificationDateBetweenOrderByModificationDate(user, priority, startDate, endDate);
+    }
+
+    public Iterable<CashFlow> findAllByUserAndModificationDateBetweenPrioritizedAndCategorized(User user, Priority priority, Category category, LocalDateTime startDate, LocalDateTime endDate) {
+        return cashFlowRepository.findAllByUserAndPriorityAndCategoryAndModificationDateBetweenOrderByModificationDate(user, priority, category, startDate, endDate);
     }
 
     public Iterable<CashFlow> findAllByUserAndModificationDateBetweenDirectionConsidered(User user, FlowDirection flowDirection, LocalDateTime startDate, LocalDateTime endDate) {
         return cashFlowRepository.findAllByUserAndFlowDirectionAndModificationDateBetweenOrderByModificationDate(user, flowDirection, startDate, endDate);
     }
 
+    public Iterable<CashFlow> findAllByUserAndModificationDateBetweenDirectionConsideredAndCategorized(User user, FlowDirection flowDirection, Category category, LocalDateTime startDate, LocalDateTime endDate) {
+        return cashFlowRepository.findAllByUserAndFlowDirectionAndCategoryAndModificationDateBetweenOrderByModificationDate(user, flowDirection, category, startDate, endDate);
+    }
+
     public Iterable<CashFlow> findAllByUserAndModificationDateBetweenPrioritizedAndDirectionConsidered(User user, Priority priority, FlowDirection flowDirection, LocalDateTime startDate, LocalDateTime endDate) {
         return cashFlowRepository.findAllByUserAndPriorityAndFlowDirectionAndModificationDateBetweenOrderByModificationDate(user, priority, flowDirection, startDate, endDate);
+    }
+
+    public Iterable<CashFlow> findAllByUserAndModificationDateBetweenPrioritizedAndDirectionConsideredAndCategorized(User user, Priority priority, FlowDirection flowDirection, Category category, LocalDateTime startDate, LocalDateTime endDate) {
+        return cashFlowRepository.findAllByUserAndPriorityAndFlowDirectionAndCategoryAndModificationDateBetweenOrderByModificationDate(user, priority, flowDirection, category, startDate, endDate);
     }
 
     public Iterable<CashFlow> findAllCashFlowsByName(String name) {
@@ -145,10 +161,6 @@ public class CashFlowService {
         if (hasRole)
             return cashFlowRepository.findTop1ByName(name);
         return cashFlowRepository.findTop1ByNameAndUser(name, currentUser);
-    }
-
-    public Iterable<CashFlow> getAllCashFlowsByCategory(Category category) {
-        return cashFlowRepository.getAllCashFlowsByCategory(category);
     }
 
     public Iterable<CashFlow> getAllCashFlowsByFlowDirection(FlowDirection flowDirection) {

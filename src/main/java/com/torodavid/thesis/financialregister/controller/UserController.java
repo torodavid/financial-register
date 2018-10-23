@@ -43,8 +43,15 @@ public class UserController {
             result.rejectValue("matchingPassword", "error.matchingPassword", "Nem egyezik a két jelszó!");
         }
         if (!result.hasErrors()) {
-            userService.register(accountDto);
-            return new ModelAndView("success");
+            if (userService.validateUsername(accountDto)) {
+                result.rejectValue("username", "error.username", "Az felhasználónév használatban!");
+            } else if (userService.validateEmail(accountDto)) {
+                result.rejectValue("email", "error.email", "Az E-mail cím használatban!");
+
+            } else {
+                userService.register(accountDto);
+                return new ModelAndView("success");
+            }
         }
         return showRegistrationForm(model, accountDto);
     }

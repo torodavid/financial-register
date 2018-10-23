@@ -49,7 +49,7 @@
                                     <div class="input-group-text">@</div>
                                 </div>
                                 <input class="form-control" type="email" th:field="*{email}"
-                                       th:classappend="${#fields.hasErrors('password')} ?  'is-invalid' : '' "/>
+                                       th:classappend="${#fields.hasErrors('email')} ?  'is-invalid' : '' "/>
                             <div th:classappend="${#fields.hasErrors('email')} ?  'invalid-feedback' : '' "
                                     th:each="error : ${#fields.errors('email')}"
                                th:text="${error}">Validation error</div>

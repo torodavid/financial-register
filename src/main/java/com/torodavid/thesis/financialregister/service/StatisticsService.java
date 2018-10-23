@@ -29,28 +29,44 @@ public class StatisticsService {
     private UserService userService;
 
     public StatisticsWrapper getStatistics(StatisticsWrapper request) {
-        TreeMap<LocalDate, Integer> chartData = new TreeMap<>((o1, o2) -> Long.compare(o1.toEpochDay(), o2.toEpochDay()));;
+        TreeMap<LocalDate, Integer> chartData = new TreeMap<>((o1, o2) -> Long.compare(o1.toEpochDay(), o2.toEpochDay()));
         int sum = 0;
         Iterable<CashFlow> cashFlows;
         StatisticsWrapper statisticsWrapper = new StatisticsWrapper();
         if (request.getPrioritized()) {
             if (request.getDirectionConsidered()) {
-                cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenPrioritizedAndDirectionConsidered(userService.getCurrentUser(), request.getPriority(), request.getFlowDirection(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                if (request.getCategoryConsidered()) {
+                    cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenPrioritizedAndDirectionConsideredAndCategorized(userService.getCurrentUser(), request.getPriority(), request.getFlowDirection(), request.getCategory(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                } else {
+                    cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenPrioritizedAndDirectionConsidered(userService.getCurrentUser(), request.getPriority(), request.getFlowDirection(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                }
                 statisticsWrapper.setBorderColor(BLUE);
                 statisticsWrapper.setBgColor(YELLOW);
             } else {
-                cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenPrioritized(userService.getCurrentUser(), request.getPriority(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                if (request.getCategoryConsidered()) {
+                    cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenPrioritizedAndCategorized(userService.getCurrentUser(), request.getPriority(), request.getCategory(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                } else {
+                    cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenPrioritized(userService.getCurrentUser(), request.getPriority(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                }
                 statisticsWrapper.setBorderColor(BLUE);
                 statisticsWrapper.setBgColor(PURPLE);
             }
 
         } else {
             if (request.getDirectionConsidered()) {
-                cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenDirectionConsidered(userService.getCurrentUser(), request.getFlowDirection(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                if (request.getCategoryConsidered()) {
+                    cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenDirectionConsideredAndCategorized(userService.getCurrentUser(), request.getFlowDirection(), request.getCategory(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                } else {
+                    cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenDirectionConsidered(userService.getCurrentUser(), request.getFlowDirection(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                }
                 statisticsWrapper.setBorderColor(YELLOW);
                 statisticsWrapper.setBgColor(GREEN);
             } else {
-                cashFlows = cashFlowService.findAllByUserAndModificationDateBetween(userService.getCurrentUser(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                if (request.getCategoryConsidered()) {
+                    cashFlows = cashFlowService.findAllByUserAndModificationDateBetweenCategorized(userService.getCurrentUser(), request.getCategory(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                } else {
+                    cashFlows = cashFlowService.findAllByUserAndModificationDateBetween(userService.getCurrentUser(), request.getStartDate().atStartOfDay(), request.getEndDate().atStartOfDay());
+                }
                 statisticsWrapper.setBorderColor(YELLOW);
                 statisticsWrapper.setBgColor(RED);
             }

@@ -19,6 +19,7 @@ public class StatisticsWrapper {
     private String borderColor;
     private Boolean prioritized;
     private Boolean directionConsidered;
+    private Boolean categoryConsidered;
 
     public LocalDate getStartDate() {
         return startDate;
@@ -99,4 +100,13 @@ public class StatisticsWrapper {
     public void setDirectionConsidered(Boolean directionConsidered) {
         this.directionConsidered = directionConsidered;
     }
+
+    public Boolean getCategoryConsidered() {
+        return categoryConsidered;
+    }
+
+    public void setCategoryConsidered(Boolean categoryConsidered) {
+        this.categoryConsidered = categoryConsidered;
+    }
+    
 }

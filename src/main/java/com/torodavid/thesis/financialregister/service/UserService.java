@@ -19,6 +19,6 @@ public interface UserService {
     void deleteById(String id);
     Page<UserDto> findPaginated(PageRequest pageable, Optional<List<String>> ids);
     User getCurrentUser();
-
-
+    boolean validateEmail(UserDto userDto);
+    boolean validateUsername(UserDto userDto);
 }
