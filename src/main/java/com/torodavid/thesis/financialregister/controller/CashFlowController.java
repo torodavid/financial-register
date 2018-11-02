@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -46,12 +47,12 @@ public class CashFlowController {
     }
 
     @PostMapping("/new")
-    public String processCreationForm(@Valid CashFlow cashFlow, BindingResult result, Model model) {
+    public ModelAndView processCreationForm(@Valid CashFlow cashFlow, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             cashFlowService.save(cashFlow).getId();
-            return "redirect:/cashFlow/list";
+            return new ModelAndView("success");
         }
-        return initCreationForm(cashFlow, model);
+        return new ModelAndView(initCreationForm(cashFlow, model));
     }
 
     @GetMapping("/view/{cashFlowId}")

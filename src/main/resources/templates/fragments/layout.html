@@ -83,7 +83,10 @@
 <script th:src="@{/resources/js/bootstrap.min.js}"></script>
 <script th:src="@{/resources/js/Chart.js}"></script>
 <script>
-    $('select[name=priority]').attr('disabled', !$('input[name=prioritized]').is(':checked'));
+    $('input[name=categoryConsidered]').attr('checked', true);
+    $('input[name=prioritized]').attr('checked', true);
+
+    //$('select[name=priority]').attr('disabled', !$('input[name=prioritized]').is(':checked'));
     $('input[name=prioritized]').change(function () {
         $('select[name=priority]').attr('disabled', !$('input[name=prioritized]').is(':checked'));
     });
@@ -93,7 +96,7 @@
         $('input[name=flowDirection]').attr('disabled', !$('input[name=directionConsidered]').is(':checked'));
     });
 
-    $('select[name=category]').attr('disabled', !$('input[name=categoryConsidered]').is(':checked'));
+    //$('select[name=category]').attr('disabled', !$('input[name=categoryConsidered]').is(':checked'));
     $('input[name=categoryConsidered]').change(function () {
         $('select[name=category]').attr('disabled', !$('input[name=categoryConsidered]').is(':checked'));
     });
