@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -18,10 +17,10 @@ import java.util.Optional;
 public interface CashFlowRepository extends CrudRepository<CashFlow, String> {
 
     @Query("select cashFlow from CashFlow cashFlow where cashFlow.name like %?1% and user_id = ?2")
-    Iterable<CashFlow> findAllCashFlowsByName(String username, User user);
+    Iterable<CashFlow> findAllCashFlowsByName(String name, User user);
 
     @Query("select cashFlow from CashFlow cashFlow where cashFlow.name like %?1%")
-    Iterable<CashFlow> findAllCashFlowsByName(String username);
+    Iterable<CashFlow> findAllCashFlowsByName(String name);
 
     Iterable<CashFlow> getAllCashFlowsByFlowDirection(FlowDirection flowDirection);
 

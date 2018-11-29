@@ -26,6 +26,7 @@ Lorem ipsum dolor sit amet, consec...
 Lorem ipsum dolor sit amet, consec...
 
 ##III. Fejlesztői dokumentáció
+### A probléma részletes specifikációját
 ###Felhasznált technológiák
 #### Gradle
 Ezt az eszközt szoftverprojektek menedzselésére és az build folyamatok automatizálására fejlesztették ki. Egyik nagy előnye a multi-projekt építés menetének egyszerűsítése, ugyan szakdolgozatomban nem használom ki ezt a tulajdonságát. Támogatja ezen felül az inkrementális projektépítéseket intelligensen meghatározva, hogy mely részei frissek a függőségek felépítési fájának, így az azon részektől függő feladatok újra feldolgozása nem szükséges. Ez egy nagy könnyedség, nem kell minden függőséget interneten keresztül felkutatni, akutális verziót figyelni a programkönyvtárnak, nem kell bemásolni a projektbe is (így nem növeli a verziókezelt projektet, commitok méreténél fontos). A plugin alapú architektúrája lehetővé teszi tetszőleges parancssorból vezérelhető alkalmazás használatát, de integrálva a fejlesztő környezetünkbe megszabadulunk ezektől az ismétlődő lépésektől is. A .gradle file-ban a buildelendő projektet és annak függőségeit Groovy nyelven írom le, amit az archive összeállítása során használ. Buildelés folyamata során lefordulnak a src/main/java package-ben található forrásfájlok, bemásolódnak az erőforrások, összeáll a program class és resources mappája. Ezekből összeállítja az archive-t, ami lehet WAR vagy JAR, ezek után összeáll az összes többi archive forrással, hozzáadott típussal. Ha vannak tesztjeink, ugyan ez a folyamat játszódik le, csak még le is futtatja a teszteket. Ezek után lefut az egész építés, bekerül minden a build mappába, és kész is, megkezdődhet a deployolás folyamata, amit egy külön részben részletezek.
@@ -38,13 +39,65 @@ A rendszer legfelsőbb rétege, amelyet a felhasználó közvetlen elér, ezen a
 * #####JavaScript
 ####Backend
 A rendszer legalsóbb rétege, ahol a front-end réteg felől érkező adatok tényleges feldolgozása folyik, majd szükség esetén választ is küld annak.
-* #####Spring
+#####Spring
   *Habalasabala*
-  - Boot
-  - Security
+   - #####Boot
+   - #####Security
+   
+     #####Használt annotációk
+     *Annotációkról habalasabala*
+     - *@Service*
+     - *@Controller*
+     - *@...*
 * #####Java 8
+   A valóságban előforduló vagy absztrakt fogalmakat valahogyan szöveges formában kell megfogalmaznunk, hogy velük kapcsolatos alkalmazást készíthessünk.
+   Ehhez az objektumorientált paradigma használata a legkényelmesebb mód, amihez a Java programozási nyelv megfelelő eszközöket biztosít. A leírandó adatokat tartalmazó entitást vagy fogalmat jellemezni lehet a nevükkel, tulajdonságaikkal és a rajtuk vagy velük végezhető műveletekkel.
+  Itt jön a képbe a Java fejlesztői csomag, ami egy felső szintű, általános célú, platformfüggetlen objektumorientált programozási nyelvet nyújt. A platformfüggetlenséget úgy biztosítja, hogy Java nyelven írt forráskódot a compiler bájtkóddá alakítja, amit egy virtuális gép futtat majd. Ez a virtuális gép fordítja a bájtkódot az adott platform gépi kódjára és futtatja aztán rajta.
+  Lehetőség van azonban natív kódra való fordításra is, javítva a hatékonyságon, de így elveszti a hordozhatóságát. 
+  - Főbb újdonságai a különböző verziókban
+  
+    Java 5
+    
+    Generikusok
+    Továbfejlesztett for ciklus (foreach)
+    Autoboxing/Unboxing
+    Típusbiztos felsorolók
+    Argumentum listák
+    Statikus import
+    Annotációk
+    
+    Java 6
+    
+    Szkriptnyelvek támogatása
+    JDBC API-jának 4. verziója
+    Java Compiler API
+    Integrált web servicek
+    Lot more enhancements
+    
+    Java 7
+    
+    String literál használata switch elágazásban
+    Interface típusok generikusok használatakor
+    Több exception elkapása egy try catch blokkon belül
+    Try catch-ben erőforrások definiálása - finally blokkok elkerülhetőek
+    Dinamikus nyelvek támogatása
+    NIO package input/output műveletekhez
+    ggyémánt szintakszis
+    Null biztos szintaxis
+    
+    Java 8
+    
+    Lambda kifejezések
+    Funkcionális interfészek
+    Pipelineok és streamek
+    Időhöz köthető műveletekhez nyújtott új API
+    alap metódus implementációk
+    típus annotációk
+    párhuzamos operációk
+    
+    Jelenlegi a legújabb verzió a 11-es, azonban a szakdolgozatom hatékony működéséhez és komplexitásához elegendő a 8-as verzió.
 * #####Apache Tomcat
-  - Egy tisztán Java nyelven íródott webszerver, amely implementálja a Sun-féle Java Servlet és a JavaServer Pages specifikációkat. Ezeket a specifikációkat támogató webszervereket szokás a servlet container, a servlet engine illetve a web engine összetételekkel is illetni. Kibővíti a Java virtuális gépének futási környezetét, kezelve az adatbázis kapcsolatot, kommunikációt a klienssel. Minden kéréshez új szálat hoz létre egy folyamaton belül, így növelve a több-felhasználós alkalmazások hatékonyságán.
+  Egy tisztán Java nyelven íródott webszerver, amely implementálja a Sun-féle Java Servlet és a JavaServer Pages specifikációkat. Ezeket a specifikációkat támogató webszervereket szokás a servlet container, a servlet engine illetve a web engine összetételekkel is illetni. Kibővíti a Java virtuális gépének futási környezetét, kezelve az adatbázis kapcsolatot, kommunikációt a klienssel. Minden kéréshez új szálat hoz létre egy folyamaton belül, így növelve a több-felhasználós alkalmazások hatékonyságán.
   
 * #####Adatbázis
   *Adatbázisok alatt struktúrált adatok összességét értjük, ahol a struktúrát az adattáblák és a közöttük lévő relációk írnak le. Ezekhez az adatokhoz hozzáférhetünk, lekérdezhetjük és szerkeszthetünk egy megfelelő adatbázis-kezelő szoftver segítségével. A programom esetében MySql-re esett a választásom, ami az egyik legelterjedtebb nyílt forráskodú, többfelhasználós relációs adatbázis-kezelő szerver.* 
@@ -71,12 +124,19 @@ A rendszer legalsóbb rétege, ahol a front-end réteg felől érkező adatok t�
 			
 ###Deployolás folyamata
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-##IV. Egy kéréstől a válaszig
+### Indítástól a kérésig
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+### Egy kéréstől a válaszig
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-## V. Fejlesztési javaslat
+###Használt fogalmak
+
+###Tesztelési terv, tesztelés eredményei
+
+### Fejlesztési javaslat
 unit tests, integrational tests, terheléses teszt, funkcionalitás bővítés, statisztika bővítés
 
-##VI.	Összefoglalás
+##	Összefoglalás
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-##VII. Irodalomjegyzék
+##CD Tartalma
+## Irodalomjegyzék
