@@ -46,22 +46,30 @@ public class CashFlowServiceImplIntegrationTest {
     @MockBean
     private CashFlowRepository cashFlowRepository;
 
+    private CashFlow cashFlow1;
+    private CashFlow cashFlow2;
+    private CashFlow cashFlow3;
+
     @Before
     public void setUp() {
-        CashFlow cashFlow1 = new CashFlow();
-        CashFlow cashFlow2 = new CashFlow();
+        cashFlow1 = new CashFlow();
+        cashFlow2 = new CashFlow();
+        cashFlow3 = new CashFlow();
         cashFlow1.setName(FIRST);
-        cashFlow1.setName("second");
-        cashFlow1.setName(FIRST);
+        cashFlow2.setName("second");
+        cashFlow3.setName(FIRST);
         cashFlow1.setPriority(Priority.ONE);
-        cashFlow1.setPriority(Priority.ONE);
-        cashFlow1.setPriority(Priority.THREE);
+        cashFlow2.setPriority(Priority.ONE);
+        cashFlow3.setPriority(Priority.THREE);
 
         Mockito.when(cashFlowRepository.findTop1ByName(cashFlow1.getName()))
                 .thenReturn(Optional.of(cashFlow1));
 
         Mockito.when(cashFlowRepository.getAllCashFlowsByPriority(Priority.ONE))
                 .thenReturn(Arrays.asList(cashFlow1, cashFlow2));
+
+        Mockito.when(cashFlowRepository.findAll())
+                .thenReturn(Arrays.asList(cashFlow1, cashFlow2, cashFlow3));
 
         User admin = new User();
         Set<Role> roles = new HashSet<>();
@@ -78,6 +86,15 @@ public class CashFlowServiceImplIntegrationTest {
 
         assertThat(cashFlow.getName())
                 .isEqualTo(FIRST);
+    }
+
+    @Test
+    public void whenGetAllCashFlows_thenAllCashFlowsShouldBeFound() {
+        Iterable<CashFlow> allCashFlows = cashFlowService.getAllCashFlows();
+
+        assertThat(allCashFlows)
+                .hasSize(3)
+        .contains(cashFlow1, cashFlow2, cashFlow3);
     }
 
 }

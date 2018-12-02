@@ -64,10 +64,8 @@ public class CashFlowRepositoryIntegrationTest {
 
     @Test
     public void whenFindByTop1Name_thenReturnCashFlow() {
-        // when
         CashFlow found = cashFlowRepository.findTop1ByName(cashFlow1.getName()).get();
 
-        // then
         assertThat(found.getName())
                 .isEqualTo(cashFlow1.getName());
     }
@@ -90,5 +88,7 @@ public class CashFlowRepositoryIntegrationTest {
                 .hasSize(2)
                 .contains(cashFlow1, cashFlow3);
     }
+
+    // TODO irni meg parat
 
 }
