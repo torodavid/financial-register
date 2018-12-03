@@ -21,14 +21,11 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,
                        AccessDeniedException ex) throws IOException {
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         if (auth != null) {
             log.info(auth.getName() + " was trying to access protected resource: " + request.getRequestURI());
         }
-
         response.sendRedirect(request.getContextPath() + "users/access-denied");
-
     }
+
 }

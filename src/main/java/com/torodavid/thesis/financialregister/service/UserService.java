@@ -1,6 +1,6 @@
 package com.torodavid.thesis.financialregister.service;
 
-import com.torodavid.thesis.financialregister.dal.dao.User;
+import com.torodavid.thesis.financialregister.dal.model.User;
 import com.torodavid.thesis.financialregister.dal.dto.UserDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

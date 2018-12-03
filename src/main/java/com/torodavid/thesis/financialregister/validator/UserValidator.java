@@ -1,6 +1,6 @@
 package com.torodavid.thesis.financialregister.validator;
 
-import com.torodavid.thesis.financialregister.dal.dao.User;
+import com.torodavid.thesis.financialregister.dal.model.User;
 import com.torodavid.thesis.financialregister.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,8 +9,8 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
-public class UserValidator implements Validator {
-
+public class UserValidator /*implements Validator*/ {
+/*
     @Autowired
     private UserService userService;
 
@@ -39,5 +39,6 @@ public class UserValidator implements Validator {
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
             errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
         }
-    }
+    }*/
+
 }

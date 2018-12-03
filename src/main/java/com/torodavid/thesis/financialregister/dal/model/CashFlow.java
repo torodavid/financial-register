@@ -1,4 +1,4 @@
-package com.torodavid.thesis.financialregister.dal.dao;
+package com.torodavid.thesis.financialregister.dal.model;
 
 import com.torodavid.thesis.financialregister.dal.enums.Category;
 import com.torodavid.thesis.financialregister.dal.enums.FlowDirection;

@@ -1,6 +1,6 @@
-package com.torodavid.thesis.financialregister.dal.repository;
+package com.torodavid.thesis.financialregister.dal.dao;
 
-import com.torodavid.thesis.financialregister.dal.dao.User;
+import com.torodavid.thesis.financialregister.dal.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

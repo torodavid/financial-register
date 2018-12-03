@@ -1,6 +1,6 @@
 package com.torodavid.thesis.financialregister.service;
 
-import com.torodavid.thesis.financialregister.dal.dao.CashFlow;
+import com.torodavid.thesis.financialregister.dal.model.CashFlow;
 import com.torodavid.thesis.financialregister.dal.dto.StatisticsWrapper;
 import com.torodavid.thesis.financialregister.dal.enums.FlowDirection;
 import org.springframework.beans.factory.annotation.Autowired;

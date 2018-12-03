@@ -1,10 +1,10 @@
 package com.torodavid.thesis.financialregister.repository;
 
-import com.torodavid.thesis.financialregister.dal.dao.CashFlow;
-import com.torodavid.thesis.financialregister.dal.dao.User;
+import com.torodavid.thesis.financialregister.dal.model.CashFlow;
+import com.torodavid.thesis.financialregister.dal.model.User;
 import com.torodavid.thesis.financialregister.dal.enums.Priority;
-import com.torodavid.thesis.financialregister.dal.repository.CashFlowRepository;
-import com.torodavid.thesis.financialregister.dal.repository.UserRepository;
+import com.torodavid.thesis.financialregister.dal.dao.CashFlowRepository;
+import com.torodavid.thesis.financialregister.dal.dao.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,6 @@
-package com.torodavid.thesis.financialregister.dal.repository;
+package com.torodavid.thesis.financialregister.dal.dao;
 
-import com.torodavid.thesis.financialregister.dal.dao.Role;
+import com.torodavid.thesis.financialregister.dal.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Long>{

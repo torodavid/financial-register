@@ -1,7 +1,7 @@
 package com.torodavid.thesis.financialregister.service;
 
-import com.torodavid.thesis.financialregister.dal.dao.CashFlow;
-import com.torodavid.thesis.financialregister.dal.dao.User;
+import com.torodavid.thesis.financialregister.dal.model.CashFlow;
+import com.torodavid.thesis.financialregister.dal.model.User;
 import com.torodavid.thesis.financialregister.dal.enums.Category;
 import com.torodavid.thesis.financialregister.dal.enums.FlowDirection;
 import com.torodavid.thesis.financialregister.dal.enums.Priority;
@@ -57,4 +57,5 @@ public interface CashFlowService {
     Iterable<CashFlow> findAllCashFlowsByUsername();
 
     void deleteCashFlowById(String id);
+
 }

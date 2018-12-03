@@ -1,9 +1,11 @@
 package com.torodavid.thesis.financialregister.service;
 
-import com.torodavid.thesis.financialregister.dal.dao.User;
+import com.torodavid.thesis.financialregister.dal.dao.CashFlowRepository;
+import com.torodavid.thesis.financialregister.dal.model.CashFlow;
+import com.torodavid.thesis.financialregister.dal.model.User;
 import com.torodavid.thesis.financialregister.dal.dto.UserDto;
-import com.torodavid.thesis.financialregister.dal.repository.RoleRepository;
-import com.torodavid.thesis.financialregister.dal.repository.UserRepository;
+import com.torodavid.thesis.financialregister.dal.dao.RoleRepository;
+import com.torodavid.thesis.financialregister.dal.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private CashFlowRepository cashFlowRepository;
 
     @Override
     public void register(UserDto userDto) {
@@ -70,7 +75,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteById(String id) {
+        Optional<User> userById = userRepository.findById(id);
+        Set<CashFlow> usersCashFlows = userById.get().getCashFlows();
+        cashFlowRepository.deleteAll(usersCashFlows);
         userRepository.deleteById(id);
     }
 

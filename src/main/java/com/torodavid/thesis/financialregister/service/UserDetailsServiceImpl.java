@@ -1,8 +1,8 @@
 package com.torodavid.thesis.financialregister.service;
 
-import com.torodavid.thesis.financialregister.dal.dao.Role;
-import com.torodavid.thesis.financialregister.dal.dao.User;
-import com.torodavid.thesis.financialregister.dal.repository.UserRepository;
+import com.torodavid.thesis.financialregister.dal.model.Role;
+import com.torodavid.thesis.financialregister.dal.model.User;
+import com.torodavid.thesis.financialregister.dal.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

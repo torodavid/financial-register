@@ -1,4 +1,4 @@
-package com.torodavid.thesis.financialregister.dal.dao;
+package com.torodavid.thesis.financialregister.dal.model;
 
 import javax.persistence.*;
 import java.util.Set;
