@@ -4,18 +4,63 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="Absolute-Center is-Responsive">
-            <div class="row" >
-                <div class="col-md-12">
-                    <h1 class="text-center" th:text="#{label.about.header}"></h1>
-                </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Pénzügyi nyilvántartó rendszer webes környezetben</h1>
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6">
+                <p class="text-justify">Az alkalmazás 2018 második félévében készült <b>Eötvös Loránd Tudományegyetem
+                    Iinformatikai Kar</b>ának <b>Programtervező informatikus BSc</b> végzettségének megszerzéséhez
+                    szükséges szakdolgozat keretein belül.
+                    Témája többfelhasználós pénzügyi nyilvántartási rendszer webes környezetben. Egy felhasználónak
+                    lehetősége van regisztrációt és bejelentkezést követően feljegyezni, módosítani, törölni bevételeit
+                    és kiadásait kategorizálva. Egyes kiadásait megjelölheti skálázott fontossági szempont alapján. Az
+                    elérhető pénzmozgási minták alapján különböző statisztikák grafikus megjelenítésére lehetőséget
+                    biztosít az alkalmazás havi/éves lebontásban.
+                </p>
+                <p class="text-justify">
+                    A alkalmazás <b>Java 8</b> nyelven íródott, építő eszköze <b>Gradle</b> build tool, az program
+                    magját <b>Spring Boot</b> keretrendszer képezi, amely integrálja a beágyazott Tomcat webszervert,
+                    előre konfigurált autentikációs és autorizációs mechanizmusát a <b>Security modul</b>nak. A
+                    felhasználóbarát, letisztult felületet <b>Thymeleaf</b> template engine segítségével biztosítja. Az
+                    adatok tárolása <b>MySQL</b> adatbázisban történik, Java objektumok és az adatbázis entitásai
+                    közötti leképezés <b>Hibernate</b> programkönyvtár segítségével történik.
+                </p>
+                <br>
                 <div>
-                    <p class="text-justify">HELLO SZIA EZ ITT A LEIRAS HELLO SZIA EZ ITT A LEIRAS HELLO SZIA EZ ITT A LEIRAS HELLO SZIA EZ ITT A LEIRAS HELLO SZIA EZ ITT A LEIRAS
-                        </p>
+                    <p class="text-left">
+                        <b>Készítő:</b> Törő Dávid Csaba
+                        <br><b>Neptun kód:</b> LGO3KX
+                    </p>
                 </div>
+            </div>
+            <div class="col-md-3">
             </div>
         </div>
     </div>
 </div>
+
+<!--<div class="container">
+    <div class="row">
+        <div class="Absolute-Center is-Responsive">
+            <div class="row" >
+                <div class="col-md-12">
+                    <h1 class="text-center">Költségnyilvántartó rendszer</h1>
+                </div>
+                <div>
+                    <p class="text-justify">Szakdolgozatom témája több felhasználós pénzügyi nyilvántartási rendszer webes környezetben. Egy felhasználónak lehetősége van regisztrációt és bejelentkezést követően feljegyezni, módosítani, törölni bevételeit és kiadásait kategorizálva. Egyes kiadásait megjelölheti skálázott fontossági szempont alapján. Az elérhető pénzmozgási minták alapján különböző statisztikák grafikus megjelenítésére lehetőséget biztosít az alkalmazás havi/éves lebontásban.
+
+
+                    </p>
+                    <p class="text-justify">
+                        A alkalmazás Java 8 nyelven íródott, építő eszköze Gradle build tool, az program magját Spring Boot keretrendszer képezi, amely integrálja a beágyazott Tomcat webszervert, előre konfigurált autentikációs és autorizációs mechanizmusát a Security modulnak. A felhasználóbarát, letisztult felületet Thymeleaf template engine segítségével biztosítja. Az adatok tárolása MySQL adatbázisban történik, Java objektumok és az adatbázis entitásai közötti leképezés Hibernate programkönyvtár segítségével történik.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
 </body>
 </html>

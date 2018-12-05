@@ -34,8 +34,8 @@
             <td th:text="${cashFlow.flowDirection.name}">Kiadas</td>
             <td class="text"><span>[[ ${#temporals.format(cashFlow.modificationDate, 'yyyy-MM-dd HH:mm')} ]]</span></td>
             <td><a th:href="@{view/__${cashFlow.id}__}">Megtekint</a></td>
-            <td sec:authorize="!hasRole('ROLE_ADMIN')"><a th:href="@{modify/__${cashFlow.id}__}">Modify</a></td>
-            <td sec:authorize="!hasRole('ROLE_ADMIN')"><a th:href="@{delete/__${cashFlow.id}__}">Delete</a></td>
+            <td sec:authorize="!hasRole('ROLE_ADMIN')"><a th:href="@{modify/__${cashFlow.id}__}">Módosítás</a></td>
+            <td sec:authorize="!hasRole('ROLE_ADMIN')"><a th:href="@{delete/__${cashFlow.id}__}">Törlés</a></td>
         </tr>
         </tbody>
     </table>

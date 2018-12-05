@@ -22,8 +22,8 @@
         <td th:text="${user.username}">Kisnyul</td>
         <td th:text="${user.surname} + ' ' + ${user.forename}">Kisnyul</td>
         <td th:text="${user.email}">Bazinagy kisnyul</td>
-        <td> <a th:href="@{profile/__${user.username}__}">Modify</a></td>
-        <td> <a th:href="@{delete/__${user.id}__}">Delete</a></td>
+        <td> <a th:href="@{profile/__${user.username}__}">Módosít</a></td>
+        <td> <a th:href="@{delete/__${user.id}__}">Törlés</a></td>
     </tr>
     </tbody>
 </table>
