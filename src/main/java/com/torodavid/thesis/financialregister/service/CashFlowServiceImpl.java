@@ -58,15 +58,15 @@ public class CashFlowServiceImpl implements CashFlowService {
 
         for (int i = 1; i < 36; i++) {
             String name1 = "Fizetés " + i;
-            cashFlowRepository.save(new CashFlow(UUID.randomUUID().toString(), name1, "Fizetés leírása " + i, new Random().nextInt((250000 - 200000) + 1) + 200000, LocalDateTime.now().minusMonths(i), LocalDateTime.now().minusMonths(i), Priority.ONE, Category.SALARY, FlowDirection.IN, user));
-            long limit = new Random().nextInt((50 - 30) + 30);
+            cashFlowRepository.save(new CashFlow(UUID.randomUUID().toString(), name1, "Fizetés leírása " + i, new Random().nextInt((350000 - 250000) + 1) + 250000, LocalDateTime.now().minusMonths(i), LocalDateTime.now().minusMonths(i), Priority.ONE, Category.SALARY, FlowDirection.IN, user));
+            long limit = new Random().nextInt((60 - 40) + 40);
             for (int j = new Integer(1); limit-- > 0; j++) {
                 String name = "Minta pénzmozgás" + i + "." + j;
                 cashFlowRepository.save(new CashFlow(
                         UUID.randomUUID().toString(),
                         name,
                         "Minta pénzmozgás leírása" + i + "." + j,
-                        new Random().nextInt((15000 - 5000) + 1) + 5000,
+                        new Random().nextInt((13000 - 5000) + 1) + 5000,
                         LocalDateTime.now().minusMonths(i).minusDays(j),
                         LocalDateTime.now().minusMonths(i).minusDays(j),
                         priorities[new Random().nextInt(priorities.length)],
